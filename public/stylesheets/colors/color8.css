@@ -1,0 +1,101 @@
+/**
+  * Color
+  * Border Color
+  * Background Color
+*/
+
+/* Color
+-------------------------------------------------------------- */
+a:hover,
+#mainnav > ul > li > a:hover, 
+#mainnav > ul > li.home > a,
+.menu-extra .shopping-cart .submenu .widget_shopping_cart_content ul li .content-box a:hover,
+.member-email a,
+.header-widgets .widget .info-icon i,
+.counter .numb-count,
+.flat-tabs ul.menu-tabs li.active a,
+.blog .entry .entry-author-name a, 
+.blog .entry .entry-categories a, 
+.blog .entry .entry-comments-link a
+{
+	color: #2196f3;
+}
+
+.header-transparent #mainnav > ul > li > a.active,
+.header-transparent #mainnav > ul > li > a:hover {
+	color: #fff;
+}
+
+/* Border Color
+-------------------------------------------------------------- */
+.button.outline:hover,
+.sw-even a:hover,
+textarea:focus, 
+input[type="text"]:focus, 
+input[type="password"]:focus, 
+input[type="datetime"]:focus, 
+input[type="datetime-local"]:focus, 
+input[type="date"]:focus, 
+input[type="month"]:focus, 
+input[type="time"]:focus, 
+input[type="week"]:focus, 
+input[type="number"]:focus, 
+input[type="email"]:focus, 
+input[type="url"]:focus, 
+input[type="search"]:focus, 
+input[type="tel"]:focus, 
+input[type="color"]:focus
+{
+	border-color: #2196f3;
+}
+
+.loader {
+	border-left: 1em solid #2196f3;
+}
+
+#mainnav ul.submenu > li {
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Background Color
+-------------------------------------------------------------- */
+#headerbar,
+#mainnav ul.submenu,
+.button,
+#site-header #headerbar .top-navigator .menu li.menu-item-has-children ul,
+.tp-caption.flat-button-slider,
+.button.white:hover,
+.button.outline:hover,
+.flex-direction-nav a:hover,
+.flat-about-us .dropcap,
+.flat-progress .progress-animate,
+.member .more-link a,
+.member-carousel.owl-theme .owl-controls .owl-nav > div:hover,
+.owl-theme .owl-controls .owl-nav > div:hover,
+.blog-carousel-slider.owl-theme .owl-controls .owl-nav > div:hover,
+.flat-accordion.style1 h3.toggle-title,
+.go-top,
+.sw-even a:hover,
+.header.header-v2,
+.header.header-v2 #mainnav > ul > li > a:after,
+.header.header-v2 #mainnav > ul > li > a.active:after,
+.header-transparent #mainnav > ul > li > a.active,
+.header-transparent #mainnav > ul > li > a:hover,
+.flat-imagebox .box-content .box-desc .box-button a,
+.flat-imagebox .box-header,
+button, input[type="button"], 
+input[type="reset"], input[type="submit"],
+.flat-price .price.highlight,
+.flat-price .cta.highlight .button,
+.products-content .products li .add_to_cart_button:hover,
+.flat-tabs ul.menu-tabs li.active a:after,
+.flat-iconbox .icon i,
+.services-detail .widget.widget_nav_menu,
+a.download:hover,
+.navigation.post-navigation .nav-links li a:hover,
+.flat-project .project-filter li.active a,
+.flat-countdown .numb,
+.btn-menu
+{
+	background-color: #2196f3;
+}
