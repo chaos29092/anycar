@@ -10,9 +10,11 @@ use Carbon\Carbon;
 if (!function_exists('image_small')) {
     function image_small($image)
     {
-        $image_path = pathinfo($image);
-        $image_small_path =  $image_path['dirname']."/".$image_path['filename']."-small.".$image_path['extension'];
-
+        $image_small_path = null;
+        if($image){
+            $image_path = pathinfo($image);
+            $image_small_path =  $image_path['dirname']."/".$image_path['filename']."-small.".$image_path['extension'];
+        }
         return $image_small_path;
     }
 }
