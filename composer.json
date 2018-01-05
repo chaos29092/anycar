@@ -16,6 +16,7 @@
         "laravel/tinker": "~1.0",
         "nicolaslopezj/searchable": "1.*",
         "predis/predis": "1.0.*",
+        "roumen/sitemap": "^2.7",
         "tcg/voyager": "^1.0"
     },
     "require-dev": {

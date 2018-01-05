@@ -12,6 +12,8 @@ use App\Models\GalleryCategory;
 use TCG\Voyager\Models\Page;
 use Carbon\Carbon;
 use Cache;
+use App;
+use URL;
 
 class HomeController extends Controller
 {
@@ -107,6 +109,44 @@ class HomeController extends Controller
         return view('gallery',compact('gallery','related_galleries'));
     }
 
+    public function sitemap()
+    {
+        $sitemap = App::make('sitemap');
+        $sitemap->setCache('laravel.sitemap', 1440);
+
+        if (!$sitemap->isCached()) {
+            $last_article = Article::orderBy('updated_at', 'desc')->firstOrFail();
+            $last_product = Product::orderBy('updated_at', 'desc')->firstOrFail();
+            // add item to the sitemap (url, date, priority, freq)
+            $sitemap->add(URL::to('/'), $last_article->updated_at, '1.0', 'daily');
+            $sitemap->add(URL::to('about_us'), page_cache(2)->updated_at, '0.9', 'monthly');
+            $sitemap->add(URL::to('contact_us'), page_cache(3)->updated_at, '0.9', 'monthly');
+            $sitemap->add(URL::to('service'), page_cache(4)->updated_at, '0.9', 'monthly');
+            $sitemap->add(URL::to('news'), $last_article->updated_at, '0.9', 'daily');
+
+            $articles = Article::where('published_at','<',Carbon::now())->orderBy('published_at', 'desc')->select('name','slug','published_at','updated_at')->get();
+            foreach ($articles as $article){
+                $sitemap->add(URL::to('article/'.$article->slug),$article->updated_at,'0.8','monthly');
+            }
+
+            $sitemap->add(URL::to('products'), $last_product->updated_at, '0.9', 'weekly');
+            $sitemap->add(URL::to('functions'), $last_product->updated_at, '0.9', 'weekly');
+
+            $products = Product::orderBy('updated_at','desc')->select('name','slug','updated_at')->get();
+            foreach ($products as $product){
+                $sitemap->add(URL::to('product/'.$product->slug),$product->updated_at,'0.9','weekly');
+            }
+
+            $product_categories = ProductCategory::orderBy('updated_at','desc')->select('name','slug','updated_at')->get();
+            foreach ($product_categories as $product_category){
+                $sitemap->add(URL::to('product_category/'.$product_category->slug),$last_product->updated_at,'0.9','weekly');
+            }
+
+        }
+
+        // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
+        return $sitemap->render('xml');
+    }
 
 //    public function search(Request $request)
 //    {

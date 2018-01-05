@@ -16,6 +16,8 @@ Route::get('product_category/{slug}', 'HomeController@product_category');
 Route::get('galleries', 'HomeController@galleries');
 Route::get('gallery/{slug}', 'HomeController@gallery');
 
+Route::get('sitemap.xml', 'HomeController@sitemap');
+
 Route::post('contact_submit', 'MailController@submit');
 Route::get('submit_ok', 'MailController@submit_ok');
 
