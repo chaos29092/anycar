@@ -32,7 +32,8 @@ class MailController extends Controller
 //            $order->subject('网站留言');
 //        });
 
-        Mail::to('chaos29092@gmail.com')->queue(new OrderShipped($order));
+//        Mail::to('chaos29092@gmail.com')->queue(new OrderShipped($order));
+        Mail::to('chaos29092@gmail.com')->send(new OrderShipped($order));
 
         return redirect('/submit_ok');
     }
