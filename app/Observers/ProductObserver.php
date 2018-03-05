@@ -30,7 +30,7 @@ class ProductObserver
 
 //        products_cache refresh
         $cacheKey = 'products';
-        $newCacheData = Product::with('productCategory')->orderBy('order', 'asc')->select('name','product_category_id','slug','image','order','hair_removal','skin_rejuvenation','dermatology_gynecology','body_slimming','tattoo_removal','multifunction')->get();
+        $newCacheData = Product::with('productCategory')->orderBy('order', 'asc')->select('name','product_category_id','slug','image','order')->get();
         Cache::forever($cacheKey,$newCacheData);
     }
 
@@ -55,7 +55,7 @@ class ProductObserver
 
 //        products_cache refresh
         $cacheKey = 'products';
-        $newCacheData = Product::with('productCategory')->orderBy('order', 'asc')->select('name','product_category_id','slug','image','order','hair_removal','skin_rejuvenation','dermatology_gynecology','body_slimming','tattoo_removal','multifunction')->get();
+        $newCacheData = Product::with('productCategory')->orderBy('order', 'asc')->select('name','product_category_id','slug','image','order')->get();
         Cache::forever($cacheKey,$newCacheData);
     }
 }

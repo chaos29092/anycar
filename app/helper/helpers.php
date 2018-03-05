@@ -97,7 +97,7 @@ if (!function_exists('products_cache')) {
         $cache_key = 'products';
         $cache_data = Cache::get($cache_key);
         if (!$cache_data){
-            $cache_data = Product::with('productCategory')->orderBy('order', 'asc')->select('name','product_category_id','slug','image','order','hair_removal','skin_rejuvenation','dermatology_gynecology','body_slimming','tattoo_removal','multifunction')->get();
+            $cache_data = Product::with('productCategory')->orderBy('order', 'asc')->select('name','product_category_id','slug','image','order')->get();
             Cache::forever($cache_key,$cache_data);
         }
 
