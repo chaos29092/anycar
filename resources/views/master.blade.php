@@ -12,11 +12,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/plugin.min.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/style_responsive.min.css">
 
     <link href="/icon/apple-touch-icon-48-precomposed.png" rel="apple-touch-icon-precomposed" sizes="48x48">
     <link href="/icon/apple-touch-icon-32-precomposed.png" rel="apple-touch-icon-precomposed">
     <link href="/icon/favicon.png" rel="shortcut icon">
+    <link href='https://fonts.googleapis.com/css?family=Dosis:400,200,300,500,600,800,700|Playfair+Display:400,400italic,700,700italic,900,900italic|Roboto:400,100,400italic,300italic,300,100italic,500,700,500italic,900italic,900,700italic|Roboto+Condensed:400,300,300italic,700italic,700,400italic' rel='stylesheet' type='text/css'>
 
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
