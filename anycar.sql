@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-03-05 09:49:26
+Date: 2018-05-19 15:11:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -95,7 +95,7 @@ CREATE TABLE `data_rows` (
   PRIMARY KEY (`id`),
   KEY `data_rows_data_type_id_foreign` (`data_type_id`),
   CONSTRAINT `data_rows_data_type_id_foreign` FOREIGN KEY (`data_type_id`) REFERENCES `data_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of data_rows
@@ -154,19 +154,19 @@ INSERT INTO `data_rows` VALUES ('67', '7', 'created_at', 'timestamp', 'Created A
 INSERT INTO `data_rows` VALUES ('68', '7', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '11');
 INSERT INTO `data_rows` VALUES ('70', '8', 'id', 'checkbox', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
 INSERT INTO `data_rows` VALUES ('71', '8', 'product_category_id', 'checkbox', 'Product Category Id', '1', '0', '0', '0', '0', '0', null, '3');
-INSERT INTO `data_rows` VALUES ('72', '8', 'name', 'text', '产品名', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"5\"}}', '4');
-INSERT INTO `data_rows` VALUES ('73', '8', 'excerpt', 'text_area', '简介', '0', '0', '1', '1', '1', '1', null, '15');
-INSERT INTO `data_rows` VALUES ('74', '8', 'image', 'image', '主图', '0', '0', '1', '1', '1', '1', '{\"resize\":{\"width\":\"600\",\"height\":\"600\"},\"quality\":\"70%\",\"upsize\":true,\"description\":\"600*600较好，即1:1大于600\",\"thumbnails\":[{\"name\":\"small\",\"crop\":{\"width\":\"300\",\"height\":\"300\"}}]}', '14');
-INSERT INTO `data_rows` VALUES ('75', '8', 'featured', 'checkbox', '是否重要', '0', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"1\"}}', '7');
-INSERT INTO `data_rows` VALUES ('76', '8', 'body', 'rich_text_box', '详情', '0', '0', '1', '1', '1', '1', null, '16');
-INSERT INTO `data_rows` VALUES ('77', '8', 'parameter', 'rich_text_box', '参数', '0', '0', '1', '1', '1', '1', null, '17');
-INSERT INTO `data_rows` VALUES ('78', '8', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"5\"}}', '5');
-INSERT INTO `data_rows` VALUES ('79', '8', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '18');
-INSERT INTO `data_rows` VALUES ('80', '8', 'meta_description', 'text_area', 'Meta Description', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '19');
-INSERT INTO `data_rows` VALUES ('81', '8', 'meta_keywords', 'text_area', 'Meta Keywords', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '20');
-INSERT INTO `data_rows` VALUES ('82', '8', 'order', 'text', '排序', '0', '1', '1', '1', '1', '1', '{\"default\":1,\"display\":{\"width\":\"1\"}}', '6');
-INSERT INTO `data_rows` VALUES ('83', '8', 'created_at', 'timestamp', 'Created At', '0', '1', '1', '1', '0', '1', null, '21');
-INSERT INTO `data_rows` VALUES ('84', '8', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '22');
+INSERT INTO `data_rows` VALUES ('72', '8', 'name', 'text', '产品名', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"4\"}}', '4');
+INSERT INTO `data_rows` VALUES ('73', '8', 'excerpt', 'text_area', '简介', '0', '0', '1', '1', '1', '1', null, '10');
+INSERT INTO `data_rows` VALUES ('74', '8', 'image', 'image', '主图', '0', '0', '1', '1', '1', '1', '{\"resize\":{\"width\":\"600\",\"height\":\"600\"},\"quality\":\"70%\",\"upsize\":true,\"description\":\"600*600较好，即1:1大于600\",\"thumbnails\":[{\"name\":\"small\",\"crop\":{\"width\":\"300\",\"height\":\"300\"}}]}', '9');
+INSERT INTO `data_rows` VALUES ('75', '8', 'featured', 'checkbox', '是否重要', '0', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"1\"}}', '8');
+INSERT INTO `data_rows` VALUES ('76', '8', 'body', 'rich_text_box', '详情', '0', '0', '1', '1', '1', '1', null, '11');
+INSERT INTO `data_rows` VALUES ('77', '8', 'parameter', 'rich_text_box', '参数', '0', '0', '1', '1', '1', '1', null, '12');
+INSERT INTO `data_rows` VALUES ('78', '8', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"4\"}}', '6');
+INSERT INTO `data_rows` VALUES ('79', '8', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '13');
+INSERT INTO `data_rows` VALUES ('80', '8', 'meta_description', 'text_area', 'Meta Description', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '14');
+INSERT INTO `data_rows` VALUES ('81', '8', 'meta_keywords', 'text_area', 'Meta Keywords', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '15');
+INSERT INTO `data_rows` VALUES ('82', '8', 'order', 'text', '排序', '0', '1', '1', '1', '1', '1', '{\"default\":1,\"display\":{\"width\":\"1\"}}', '7');
+INSERT INTO `data_rows` VALUES ('83', '8', 'created_at', 'timestamp', 'Created At', '0', '1', '1', '1', '0', '1', null, '16');
+INSERT INTO `data_rows` VALUES ('84', '8', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '17');
 INSERT INTO `data_rows` VALUES ('85', '8', 'product_belongsto_product_category_relationship', 'relationship', '产品分类', '0', '1', '1', '1', '1', '1', '{\"model\":\"App\\\\Models\\\\ProductCategory\",\"table\":\"product_categories\",\"type\":\"belongsTo\",\"column\":\"product_category_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"categories\",\"pivot\":\"0\"}', '2');
 INSERT INTO `data_rows` VALUES ('86', '9', 'id', 'number', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
 INSERT INTO `data_rows` VALUES ('87', '9', 'category_id', 'select_dropdown', 'Category Id', '0', '0', '0', '0', '0', '0', null, '2');
@@ -212,6 +212,7 @@ INSERT INTO `data_rows` VALUES ('147', '16', 'message', 'text', 'Message', '0', 
 INSERT INTO `data_rows` VALUES ('148', '16', 'url', 'text', 'Url', '0', '0', '1', '1', '1', '1', null, '7');
 INSERT INTO `data_rows` VALUES ('149', '16', 'created_at', 'timestamp', 'Created At', '0', '1', '1', '1', '0', '1', null, '8');
 INSERT INTO `data_rows` VALUES ('150', '16', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '9');
+INSERT INTO `data_rows` VALUES ('151', '8', 'price', 'number', '转化价值（价格*转化率）', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"2\"}}', '5');
 
 -- ----------------------------
 -- Table structure for data_types
@@ -734,15 +735,17 @@ CREATE TABLE `products` (
   `order` tinyint(4) DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `price` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `products_slug_unique` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of products
 -- ----------------------------
-INSERT INTO `products` VALUES ('1', '2', 'product  1', 'product  11 excerpt', 'products/December2017/fvzO6spGVKap3JaoXVf1.jpg', '1', '<p>product&nbsp; 1&nbsp;product&nbsp; 1</p>', '<p>product&nbsp; 1 tech</p>', 'product-1', 'product  1 seo', 'product  1', 'product  1', '1', '2017-12-20 05:20:00', '2018-03-05 01:47:17');
-INSERT INTO `products` VALUES ('2', '1', 'product 2', 'product 2 excerpt', 'products/December2017/KKdbx6UY1BqKc4gwadcB.jpg', '1', '<p>product 2</p>', '<p>product 2 tech</p>', 'product-2', 'product 2 seo', 'product 2', 'product 2', '2', '2017-12-20 05:23:00', '2017-12-20 07:06:46');
+INSERT INTO `products` VALUES ('1', '2', 'product  1', 'product  11 excerpt', 'products/December2017/fvzO6spGVKap3JaoXVf1.jpg', '1', '<p>product&nbsp; 1&nbsp;product&nbsp; 11</p>', '<p>product&nbsp; 1 tech</p>', 'product-1', 'product  1 seo', 'product  1', 'product  1', '1', '2017-12-20 05:20:00', '2018-05-19 06:57:03', '200');
+INSERT INTO `products` VALUES ('2', '1', 'product 2', 'product 2 excerpt', 'products/December2017/KKdbx6UY1BqKc4gwadcB.jpg', '1', '<p>product 2</p>', '<p>product 2 tech</p>', 'product-2', 'product 2 seo', 'product 2', 'product 2', '2', '2017-12-20 05:23:00', '2018-05-19 06:47:18', '100');
+INSERT INTO `products` VALUES ('3', '1', 'product 3', '1', null, '0', null, null, 'product-3', null, null, null, '1', '2018-05-19 06:48:00', '2018-05-19 06:55:05', '300');
 
 -- ----------------------------
 -- Table structure for roles
