@@ -63,7 +63,7 @@ class HomeController extends Controller
     public function product($slug)
     {
         $product = product_cache($slug);
-        $related_products = Product::where('product_category_id',$product->product_category_id)->where('id', '<>', $product->id)->orderBy('featured', 'desc')->orderBy('order', 'asc')->select('name','slug','image','order','featured')->take(8)->get();
+        $related_products = Product::where('product_category_id',$product->product_category_id)->where('id', '<>', $product->id)->orderBy('featured', 'desc')->orderBy('order', 'asc')->select('name','price','slug','image','order','featured')->take(8)->get();
         $featured_products = featured_products_cache();
 
         return view('product',compact('product','related_products','featured_products'));
@@ -71,7 +71,7 @@ class HomeController extends Controller
 
     public function products()
     {
-        $products = Product::orderBy('featured', 'desc')->orderBy('order', 'asc')->select('name','slug','image','order','featured')->paginate(12);
+        $products = Product::orderBy('featured', 'desc')->orderBy('order', 'asc')->select('name','price','slug','image','order','featured')->paginate(12);
         $featured_products = featured_products_cache();
 
         return view('products',compact('products','featured_products'));

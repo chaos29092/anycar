@@ -2,6 +2,59 @@
 <!--[if IE 8 ]><html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"><!--<![endif]-->
 <head>
+    @if(isset($related_products))
+        <script>
+            product_price = '{{$product->price}}';
+        </script>
+    @elseif(isset($category_products))
+        <script>
+            product_price = '{{$category_products->avg('price')}}';
+        </script>
+    @elseif(isset($featured_products))
+        <script>
+            product_price = '{{$avg_price}}';
+        </script>
+    @else
+        <script>
+            product_price = '{{$avg_price}}';
+        </script>
+    @endif
+    <script>
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0; i<ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1);
+                if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+        function setCookie(c_name,value,expiredays)
+        {
+            var exdate=new Date()
+            exdate.setDate(exdate.getDate()+expiredays)
+            document.cookie=c_name+ "=" +escape(value)+
+                ((expiredays==null) ? "" : ";expires="+exdate.toGMTString())+";path=/"
+        }
+        function uuidv4() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        clientId = getCookie('clientId');
+        if (!clientId){
+            clientId = uuidv4();
+        }
+        setCookie('clientId',clientId,730);
+        dataLayer = [{
+            'clientId': clientId,
+            'price':product_price
+        }];
+    </script>
+
+
     <meta charset="utf-8">
     <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
     <title>@yield('seo_title') - {{setting('index.company_name')}}</title>

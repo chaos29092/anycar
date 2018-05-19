@@ -20,17 +20,17 @@ class ProductObserver
 
 //        featured_products_cache refresh
         $cacheKey = 'featured_products';
-        $newCacheData = Product::whereFeatured(1)->orderBy('order', 'asc')->select('name','slug','image','order','featured')->take(4)->get();
+        $newCacheData = Product::whereFeatured(1)->orderBy('order', 'asc')->select('name','price','slug','image','order','featured')->take(4)->get();
         Cache::forever($cacheKey,$newCacheData);
 
 //        category_products_cache refresh
         $cacheKey = 'category_products_'.$product->product_category_id;
-        $newCacheData = Product::where('product_category_id',$product->product_category_id)->orderBy('featured', 'desc')->orderBy('order', 'desc')->select('name','slug','image','order','featured')->get();
+        $newCacheData = Product::where('product_category_id',$product->product_category_id)->orderBy('featured', 'desc')->orderBy('order', 'desc')->select('name','price','slug','image','order','featured')->get();
         Cache::forever($cacheKey,$newCacheData);
 
 //        products_cache refresh
         $cacheKey = 'products';
-        $newCacheData = Product::with('productCategory')->orderBy('order', 'asc')->select('name','product_category_id','slug','image','order')->get();
+        $newCacheData = Product::with('productCategory')->orderBy('order', 'asc')->select('name','price','product_category_id','slug','image','order')->get();
         Cache::forever($cacheKey,$newCacheData);
     }
 
@@ -45,17 +45,17 @@ class ProductObserver
 
 //        featured_products_cache refresh
         $cacheKey = 'featured_products';
-        $newCacheData = Product::whereFeatured(1)->orderBy('order', 'asc')->select('name','slug','image','order','featured')->take(4)->get();
+        $newCacheData = Product::whereFeatured(1)->orderBy('order', 'asc')->select('name','price','slug','image','order','featured')->take(4)->get();
         Cache::forever($cacheKey,$newCacheData);
 
 //        category_products_cache refresh
         $cacheKey = 'category_products_'.$product->product_category_id;
-        $newCacheData = Product::where('product_category_id',$product->product_category_id)->orderBy('featured', 'desc')->orderBy('order', 'desc')->select('name','slug','image','order','featured')->get();
+        $newCacheData = Product::where('product_category_id',$product->product_category_id)->orderBy('featured', 'desc')->orderBy('order', 'desc')->select('name','price','slug','image','order','featured')->get();
         Cache::forever($cacheKey,$newCacheData);
 
 //        products_cache refresh
         $cacheKey = 'products';
-        $newCacheData = Product::with('productCategory')->orderBy('order', 'asc')->select('name','product_category_id','slug','image','order')->get();
+        $newCacheData = Product::with('productCategory')->orderBy('order', 'asc')->select('name','price','product_category_id','slug','image','order')->get();
         Cache::forever($cacheKey,$newCacheData);
     }
 }

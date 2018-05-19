@@ -97,7 +97,7 @@ if (!function_exists('products_cache')) {
         $cache_key = 'products';
         $cache_data = Cache::get($cache_key);
         if (!$cache_data){
-            $cache_data = Product::with('productCategory')->orderBy('order', 'asc')->select('name','product_category_id','slug','image','order')->get();
+            $cache_data = Product::with('productCategory')->orderBy('order', 'asc')->select('name','price','product_category_id','slug','image','order')->get();
             Cache::forever($cache_key,$cache_data);
         }
 
@@ -111,7 +111,7 @@ if (!function_exists('featured_products_cache')) {
         $cache_key = 'featured_products';
         $cache_data = Cache::get($cache_key);
         if(!$cache_data){
-            $cache_data = Product::whereFeatured(1)->orderBy('order', 'asc')->select('name','slug','image','order','featured')->take(4)->get();
+            $cache_data = Product::whereFeatured(1)->orderBy('order', 'asc')->select('name','price','slug','image','order','featured')->take(4)->get();
             Cache::forever($cache_key,$cache_data);
         }
 
@@ -125,7 +125,7 @@ if (!function_exists('category_products_cache')) {
         $cache_key = 'category_products_' . $product_category_id;
         $cache_data = Cache::get($cache_key);
         if (!$cache_data) {
-            $cache_data = Product::where('product_category_id', $product_category_id)->orderBy('featured', 'desc')->orderBy('order', 'desc')->select('name', 'slug', 'image', 'order', 'featured')->get();
+            $cache_data = Product::where('product_category_id', $product_category_id)->orderBy('featured', 'desc')->orderBy('order', 'desc')->select('name','price','slug', 'image', 'order', 'featured')->get();
             Cache::forever($cache_key, $cache_data);
         }
 
