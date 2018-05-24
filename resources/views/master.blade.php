@@ -237,7 +237,7 @@
 {{--<script type="text/javascript" src="/javascript/jquery.isotope.min.js"></script>--}}
 {{--<script type="text/javascript" src="/javascript/jquery-waypoints.js"></script>--}}
 {{--<script type="text/javascript" src="/javascript/jquery.cookie.js"></script>--}}
-<script type="text/javascript" src="/javascript/main.js"></script>
+<script type="text/javascript" src="/javascript/main.min.js"></script>
 
 <script type="text/javascript" src="/javascript/themepunch_slider.min.js"></script>
 {{--<script type="text/javascript" src="/javascript/jquery.themepunch.tools.min.js"></script>--}}
