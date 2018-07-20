@@ -1,7 +1,7 @@
 @extends('master')
 @section('seo_title')
     @if(!$page->seo_title)
-        {{title_case($page->title)}}
+        {{title_case($page->name)}}
     @else
         {{title_case($page->seo_title)}}
     @endif

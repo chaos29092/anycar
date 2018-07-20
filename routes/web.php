@@ -1,5 +1,20 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
 Route::get('/', 'HomeController@index');
 Route::get('about_us', 'HomeController@about_us');
 Route::get('contact_us', 'HomeController@contact_us');
@@ -21,8 +36,8 @@ Route::get('sitemap.xml', 'HomeController@sitemap');
 Route::post('contact_submit', 'MailController@submit');
 Route::get('submit_ok', 'MailController@submit_ok');
 
-//Route::post('search', 'HomeController@search');
-//Route::get('search_result', 'HomeController@search_result');
+Route::get('cache_clear','HomeController@cache_clear');
+//Route::get('search_result','HomeController@search_result');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

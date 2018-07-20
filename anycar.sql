@@ -4,16 +4,34 @@ Navicat MySQL Data Transfer
 Source Server         : localhost_33060
 Source Server Version : 50717
 Source Host           : localhost:33060
-Source Database       : anycar
+Source Database       : test
 
 Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-05-19 15:11:07
+Date: 2018-07-20 16:18:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for article_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `article_tag`;
+CREATE TABLE `article_tag` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) DEFAULT NULL,
+  `tag_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of article_tag
+-- ----------------------------
+INSERT INTO `article_tag` VALUES ('1', '4', '1');
+INSERT INTO `article_tag` VALUES ('2', '4', '2');
+INSERT INTO `article_tag` VALUES ('3', '1', '1');
 
 -- ----------------------------
 -- Table structure for articles
@@ -27,25 +45,24 @@ CREATE TABLE `articles` (
   `body` text COLLATE utf8_unicode_ci,
   `image` text COLLATE utf8_unicode_ci,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `seo_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8_unicode_ci,
-  `meta_keywords` text COLLATE utf8_unicode_ci,
   `featured` tinyint(4) NOT NULL DEFAULT '0',
   `published_at` datetime NOT NULL,
+  `seo_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_description` text COLLATE utf8_unicode_ci,
+  `meta_keywords` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `articles_slug_unique` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of articles
 -- ----------------------------
-INSERT INTO `articles` VALUES ('1', null, 'article 1', 'article 1 excerpt', '<p>article 1</p>', 'articles/December2017/8njUeiNjG5fRj14rt4jQ.jpg', 'article-1', 'article 1 seo', 'article 1', 'article 1', '1', '2017-12-20 00:00:00', '2017-12-20 02:49:00', '2017-12-22 01:33:46');
-INSERT INTO `articles` VALUES ('2', null, 'article 2', 'article 2 excerpt', '<p>article 2&nbsp;article 2</p>', 'articles/December2017/87evtourhfzF2aIjuVjP.jpg', 'article-2', 'article 2 seo', 'article 2', 'article 2', '0', '2017-12-20 00:00:00', '2017-12-20 02:55:37', '2017-12-20 02:55:37');
-INSERT INTO `articles` VALUES ('4', null, 'article 4', 'article 4 excerpt 1', '<p>article 4</p>', 'articles/December2017/cZar87icIanlxs6LcmEh.jpg', 'article-4', 'article 4 seo', 'article 4', 'article 4', '0', '2017-12-21 00:00:00', '2017-12-21 07:14:00', '2017-12-21 09:10:11');
-INSERT INTO `articles` VALUES ('5', null, 'article 5', 'article 5 excerpt', '<p>article 5</p>', 'articles/December2017/8SMxC7BCLiAvJbOxw4KM.jpg', 'article-5', 'article 5 seo', 'article 5', 'article 5', '1', '2017-12-21 00:00:00', '2017-12-21 09:28:37', '2017-12-21 09:28:37');
-INSERT INTO `articles` VALUES ('6', null, 'article 3 3', 'article 3 excerpt', '<p>article 3</p>', 'articles/December2017/iGxhkQUj5Thca7ILw6bw.jpg', 'article-3-3', 'article 3 seo', 'article 3', 'article 3', '1', '2017-12-22 00:00:00', '2017-12-22 05:53:00', '2017-12-22 05:55:49');
+INSERT INTO `articles` VALUES ('1', '1', 'article 1', 'article 1', '<p>article 1&nbsp;article 1</p>', 'articles/July2018/uhGvj7bJVLVg5kaaHzIL.jpg', 'article-1', '1', '2018-06-25 00:00:00', 'article 1', 'article 1', 'article 1', '2018-06-25 09:04:00', '2018-07-20 08:12:31');
+INSERT INTO `articles` VALUES ('2', '1', 'article 2', 'article 2', '<p>article 2&nbsp;article 2</p>', 'articles/July2018/TSaDPoie04rtJnoKgCG0.jpg', 'article-2', '0', '2018-06-25 00:00:00', 'article 2', 'article 2', 'article 2', '2018-06-25 09:05:00', '2018-07-20 08:12:57');
+INSERT INTO `articles` VALUES ('3', '1', 'article 3', null, null, 'articles/July2018/q3BBdeL1D7K1q9kjFaO8.jpg', 'article-3', '0', '2018-06-26 00:00:00', null, null, null, '2018-06-26 03:17:54', '2018-07-20 08:13:22');
+INSERT INTO `articles` VALUES ('4', '1', 'article 4', null, null, null, 'article-4', '0', '2018-06-26 00:00:00', null, null, null, '2018-06-26 03:20:00', '2018-06-26 06:12:18');
 
 -- ----------------------------
 -- Table structure for categories
@@ -53,26 +70,24 @@ INSERT INTO `articles` VALUES ('6', null, 'article 3 3', 'article 3 excerpt', '<
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `parent_id` int(10) unsigned DEFAULT NULL,
-  `order` int(11) NOT NULL DEFAULT '1',
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `order` tinyint(4) NOT NULL DEFAULT '1',
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `image` text COLLATE utf8_unicode_ci,
+  `seo_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_description` text COLLATE utf8_unicode_ci,
+  `meta_keywords` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `seo_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci,
-  `meta_adwords` text COLLATE utf8mb4_unicode_ci,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `categories_slug_unique` (`slug`),
-  KEY `categories_parent_id_foreign` (`parent_id`),
-  CONSTRAINT `categories_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  UNIQUE KEY `categories_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of categories
 -- ----------------------------
-INSERT INTO `categories` VALUES ('1', null, '1', 'news', 'news', '2017-12-20 02:45:24', '2017-12-20 02:45:24', 'news seo', 'news', 'news', null);
+INSERT INTO `categories` VALUES ('1', '1', 'Category 1', 'category-1', 'categories/June2018/ax8t2qn4wwWyx3YgBX44.jpg', null, null, null, '2018-06-25 08:59:35', '2018-06-25 08:59:35');
+INSERT INTO `categories` VALUES ('2', '1', 'Category 2', 'category-2', null, null, null, null, '2018-06-25 09:03:30', '2018-06-25 09:03:30');
 
 -- ----------------------------
 -- Table structure for data_rows
@@ -95,124 +110,149 @@ CREATE TABLE `data_rows` (
   PRIMARY KEY (`id`),
   KEY `data_rows_data_type_id_foreign` (`data_type_id`),
   CONSTRAINT `data_rows_data_type_id_foreign` FOREIGN KEY (`data_type_id`) REFERENCES `data_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of data_rows
 -- ----------------------------
-INSERT INTO `data_rows` VALUES ('14', '2', 'id', 'number', 'id', '1', '1', '0', '0', '0', '0', null, '1');
-INSERT INTO `data_rows` VALUES ('15', '2', 'author_id', 'text', 'author_id', '1', '0', '0', '0', '0', '0', null, '2');
-INSERT INTO `data_rows` VALUES ('16', '2', 'title', 'text', 'title', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '3');
-INSERT INTO `data_rows` VALUES ('17', '2', 'excerpt', 'text_area', 'excerpt', '0', '0', '1', '1', '1', '1', null, '8');
-INSERT INTO `data_rows` VALUES ('18', '2', 'body', 'rich_text_box', 'body', '0', '0', '1', '1', '1', '1', null, '9');
-INSERT INTO `data_rows` VALUES ('19', '2', 'slug', 'text', 'slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"title\"},\"display\":{\"width\":\"6\"}}', '4');
-INSERT INTO `data_rows` VALUES ('20', '2', 'meta_description', 'text_area', 'meta_description', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '6');
-INSERT INTO `data_rows` VALUES ('21', '2', 'meta_keywords', 'text_area', 'meta_keywords', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '7');
-INSERT INTO `data_rows` VALUES ('23', '2', 'created_at', 'timestamp', 'created_at', '0', '1', '1', '0', '0', '0', null, '11');
-INSERT INTO `data_rows` VALUES ('24', '2', 'updated_at', 'timestamp', 'updated_at', '0', '0', '0', '0', '0', '0', null, '12');
-INSERT INTO `data_rows` VALUES ('25', '2', 'image', 'image', 'image', '0', '0', '1', '1', '1', '1', null, '10');
-INSERT INTO `data_rows` VALUES ('26', '3', 'id', 'number', 'id', '1', '0', '0', '0', '0', '0', '', '1');
-INSERT INTO `data_rows` VALUES ('27', '3', 'name', 'text', 'name', '1', '1', '1', '1', '1', '1', '', '2');
-INSERT INTO `data_rows` VALUES ('28', '3', 'email', 'text', 'email', '1', '1', '1', '1', '1', '1', '', '3');
-INSERT INTO `data_rows` VALUES ('29', '3', 'password', 'password', 'password', '0', '0', '0', '1', '1', '0', '', '4');
-INSERT INTO `data_rows` VALUES ('30', '3', 'user_belongsto_role_relationship', 'relationship', 'Role', '0', '1', '1', '1', '1', '0', '{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsTo\",\"column\":\"role_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"roles\",\"pivot\":\"0\"}', '10');
-INSERT INTO `data_rows` VALUES ('31', '3', 'remember_token', 'text', 'remember_token', '0', '0', '0', '0', '0', '0', '', '5');
-INSERT INTO `data_rows` VALUES ('32', '3', 'created_at', 'timestamp', 'created_at', '0', '1', '1', '0', '0', '0', '', '6');
-INSERT INTO `data_rows` VALUES ('33', '3', 'updated_at', 'timestamp', 'updated_at', '0', '0', '0', '0', '0', '0', '', '7');
-INSERT INTO `data_rows` VALUES ('34', '3', 'avatar', 'image', 'avatar', '0', '1', '1', '1', '1', '1', '', '8');
-INSERT INTO `data_rows` VALUES ('35', '5', 'id', 'number', 'id', '1', '0', '0', '0', '0', '0', '', '1');
-INSERT INTO `data_rows` VALUES ('36', '5', 'name', 'text', 'name', '1', '1', '1', '1', '1', '1', '', '2');
-INSERT INTO `data_rows` VALUES ('37', '5', 'created_at', 'timestamp', 'created_at', '0', '0', '0', '0', '0', '0', '', '3');
-INSERT INTO `data_rows` VALUES ('38', '5', 'updated_at', 'timestamp', 'updated_at', '0', '0', '0', '0', '0', '0', '', '4');
-INSERT INTO `data_rows` VALUES ('39', '4', 'id', 'number', 'id', '1', '0', '0', '0', '0', '0', null, '1');
-INSERT INTO `data_rows` VALUES ('40', '4', 'parent_id', 'select_dropdown', 'parent_id', '0', '0', '0', '0', '0', '0', '{\"default\":\"\",\"null\":\"\",\"options\":{\"\":\"-- None --\"},\"relationship\":{\"key\":\"id\",\"label\":\"name\"}}', '2');
-INSERT INTO `data_rows` VALUES ('41', '4', 'order', 'text', 'order', '1', '1', '1', '1', '1', '1', '{\"default\":1,\"display\":{\"width\":\"1\"}}', '3');
-INSERT INTO `data_rows` VALUES ('42', '4', 'name', 'text', 'name', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '4');
-INSERT INTO `data_rows` VALUES ('43', '4', 'slug', 'text', 'slug', '1', '1', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"5\"}}', '5');
-INSERT INTO `data_rows` VALUES ('44', '4', 'created_at', 'timestamp', 'created_at', '0', '0', '1', '0', '0', '0', null, '7');
-INSERT INTO `data_rows` VALUES ('45', '4', 'updated_at', 'timestamp', 'updated_at', '0', '0', '0', '0', '0', '0', null, '8');
-INSERT INTO `data_rows` VALUES ('46', '6', 'id', 'number', 'id', '1', '0', '0', '0', '0', '0', '', '1');
-INSERT INTO `data_rows` VALUES ('47', '6', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', '', '2');
-INSERT INTO `data_rows` VALUES ('48', '6', 'created_at', 'timestamp', 'created_at', '0', '0', '0', '0', '0', '0', '', '3');
-INSERT INTO `data_rows` VALUES ('49', '6', 'updated_at', 'timestamp', 'updated_at', '0', '0', '0', '0', '0', '0', '', '4');
-INSERT INTO `data_rows` VALUES ('50', '6', 'display_name', 'text', 'Display Name', '1', '1', '1', '1', '1', '1', '', '5');
-INSERT INTO `data_rows` VALUES ('53', '3', 'role_id', 'text', 'role_id', '1', '1', '1', '1', '1', '1', '', '9');
-INSERT INTO `data_rows` VALUES ('54', '4', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '9');
-INSERT INTO `data_rows` VALUES ('55', '4', 'meta_description', 'text_area', 'Meta Description', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '10');
-INSERT INTO `data_rows` VALUES ('56', '4', 'meta_adwords', 'text_area', 'Meta Adwords', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '11');
-INSERT INTO `data_rows` VALUES ('57', '4', 'image', 'image', 'Image', '0', '0', '1', '1', '1', '1', '{\"resize\":{\"width\":\"600\",\"height\":\"null\"},\"quality\":\"70%\",\"upsize\":true,\"description\":\"标注下最佳尺寸\"}', '6');
-INSERT INTO `data_rows` VALUES ('58', '7', 'id', 'number', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
-INSERT INTO `data_rows` VALUES ('59', '7', 'parent_id', 'select_dropdown', '父分类', '0', '0', '1', '1', '1', '1', '{\"default\":\"\",\"null\":\"\",\"options\":{\"\":\"-- None --\"},\"relationship\":{\"key\":\"id\",\"label\":\"name\"}}', '2');
-INSERT INTO `data_rows` VALUES ('60', '7', 'name', 'text', '分类名称', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '4');
-INSERT INTO `data_rows` VALUES ('61', '7', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"5\"}}', '5');
-INSERT INTO `data_rows` VALUES ('62', '7', 'image', 'image', 'Image', '0', '0', '1', '1', '1', '1', '{\"resize\":{\"width\":\"300\",\"height\":\"300\"},\"quality\":\"70%\",\"upsize\":true,\"description\":\"300*300\"}', '6');
-INSERT INTO `data_rows` VALUES ('63', '7', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '7');
-INSERT INTO `data_rows` VALUES ('64', '7', 'meta_description', 'text_area', 'Meta Description', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '8');
-INSERT INTO `data_rows` VALUES ('65', '7', 'meta_keywords', 'text_area', 'Meta Keywords', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '9');
-INSERT INTO `data_rows` VALUES ('66', '7', 'order', 'text', 'Order(小到大)', '0', '1', '1', '1', '1', '1', '{\"default\":1,\"display\":{\"width\":\"1\"}}', '3');
-INSERT INTO `data_rows` VALUES ('67', '7', 'created_at', 'timestamp', 'Created At', '0', '1', '1', '1', '0', '1', null, '10');
-INSERT INTO `data_rows` VALUES ('68', '7', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '11');
-INSERT INTO `data_rows` VALUES ('70', '8', 'id', 'checkbox', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
-INSERT INTO `data_rows` VALUES ('71', '8', 'product_category_id', 'checkbox', 'Product Category Id', '1', '0', '0', '0', '0', '0', null, '3');
-INSERT INTO `data_rows` VALUES ('72', '8', 'name', 'text', '产品名', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"4\"}}', '4');
-INSERT INTO `data_rows` VALUES ('73', '8', 'excerpt', 'text_area', '简介', '0', '0', '1', '1', '1', '1', null, '10');
-INSERT INTO `data_rows` VALUES ('74', '8', 'image', 'image', '主图', '0', '0', '1', '1', '1', '1', '{\"resize\":{\"width\":\"600\",\"height\":\"600\"},\"quality\":\"70%\",\"upsize\":true,\"description\":\"600*600较好，即1:1大于600\",\"thumbnails\":[{\"name\":\"small\",\"crop\":{\"width\":\"300\",\"height\":\"300\"}}]}', '9');
-INSERT INTO `data_rows` VALUES ('75', '8', 'featured', 'checkbox', '是否重要', '0', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"1\"}}', '8');
-INSERT INTO `data_rows` VALUES ('76', '8', 'body', 'rich_text_box', '详情', '0', '0', '1', '1', '1', '1', null, '11');
-INSERT INTO `data_rows` VALUES ('77', '8', 'parameter', 'rich_text_box', '参数', '0', '0', '1', '1', '1', '1', null, '12');
-INSERT INTO `data_rows` VALUES ('78', '8', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"4\"}}', '6');
-INSERT INTO `data_rows` VALUES ('79', '8', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '13');
-INSERT INTO `data_rows` VALUES ('80', '8', 'meta_description', 'text_area', 'Meta Description', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '14');
-INSERT INTO `data_rows` VALUES ('81', '8', 'meta_keywords', 'text_area', 'Meta Keywords', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '15');
-INSERT INTO `data_rows` VALUES ('82', '8', 'order', 'text', '排序', '0', '1', '1', '1', '1', '1', '{\"default\":1,\"display\":{\"width\":\"1\"}}', '7');
-INSERT INTO `data_rows` VALUES ('83', '8', 'created_at', 'timestamp', 'Created At', '0', '1', '1', '1', '0', '1', null, '16');
-INSERT INTO `data_rows` VALUES ('84', '8', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '17');
-INSERT INTO `data_rows` VALUES ('85', '8', 'product_belongsto_product_category_relationship', 'relationship', '产品分类', '0', '1', '1', '1', '1', '1', '{\"model\":\"App\\\\Models\\\\ProductCategory\",\"table\":\"product_categories\",\"type\":\"belongsTo\",\"column\":\"product_category_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"categories\",\"pivot\":\"0\"}', '2');
-INSERT INTO `data_rows` VALUES ('86', '9', 'id', 'number', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
-INSERT INTO `data_rows` VALUES ('87', '9', 'category_id', 'select_dropdown', 'Category Id', '0', '0', '0', '0', '0', '0', null, '2');
-INSERT INTO `data_rows` VALUES ('88', '9', 'name', 'text', '标题', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"5\"}}', '5');
-INSERT INTO `data_rows` VALUES ('89', '9', 'excerpt', 'text_area', '简介', '0', '0', '1', '1', '1', '1', null, '9');
-INSERT INTO `data_rows` VALUES ('90', '9', 'body', 'rich_text_box', '正文', '0', '0', '1', '1', '1', '1', null, '10');
-INSERT INTO `data_rows` VALUES ('91', '9', 'image', 'image', 'Image', '0', '0', '1', '1', '1', '1', '{\"resize\":{\"width\":\"800\",\"height\":null},\"quality\":\"70%\",\"upsize\":true,\"description\":\"最好800像素以上\",\"thumbnails\":[{\"name\":\"small\",\"crop\":{\"width\":\"400\",\"height\":\"300\"}}]}', '8');
-INSERT INTO `data_rows` VALUES ('92', '9', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"4\"}}', '6');
-INSERT INTO `data_rows` VALUES ('93', '9', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '11');
-INSERT INTO `data_rows` VALUES ('94', '9', 'meta_description', 'text_area', 'Meta Description', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '12');
-INSERT INTO `data_rows` VALUES ('95', '9', 'meta_keywords', 'text_area', 'Meta Keywords', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '13');
-INSERT INTO `data_rows` VALUES ('96', '9', 'featured', 'checkbox', '是否重要', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"1\"}}', '7');
-INSERT INTO `data_rows` VALUES ('97', '9', 'published_at', 'date', '发布时间（必填！）', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"2\"}}', '4');
-INSERT INTO `data_rows` VALUES ('98', '9', 'created_at', 'timestamp', 'Created At', '0', '0', '1', '1', '0', '1', null, '14');
-INSERT INTO `data_rows` VALUES ('99', '9', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '15');
-INSERT INTO `data_rows` VALUES ('100', '9', 'article_belongsto_category_relationship', 'relationship', '分类', '0', '0', '0', '0', '0', '0', '{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Category\",\"table\":\"categories\",\"type\":\"belongsTo\",\"column\":\"category_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"articles\",\"pivot\":\"0\"}', '3');
-INSERT INTO `data_rows` VALUES ('107', '13', 'id', 'checkbox', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
-INSERT INTO `data_rows` VALUES ('108', '13', 'name', 'text', '分类名', '1', '1', '1', '1', '1', '1', null, '3');
-INSERT INTO `data_rows` VALUES ('109', '13', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"}}', '4');
-INSERT INTO `data_rows` VALUES ('110', '13', 'order', 'text', 'Order', '0', '1', '1', '1', '1', '1', '{\"default\":1}', '2');
-INSERT INTO `data_rows` VALUES ('111', '13', 'created_at', 'timestamp', 'Created At', '0', '1', '1', '1', '0', '1', null, '5');
-INSERT INTO `data_rows` VALUES ('112', '13', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '6');
-INSERT INTO `data_rows` VALUES ('113', '14', 'id', 'checkbox', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
-INSERT INTO `data_rows` VALUES ('114', '14', 'order', 'text', 'Order', '0', '1', '1', '1', '1', '1', '{\"default\":1,\"display\":{\"width\":\"1\"}}', '3');
-INSERT INTO `data_rows` VALUES ('115', '14', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '4');
-INSERT INTO `data_rows` VALUES ('116', '14', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"5\"}}', '5');
-INSERT INTO `data_rows` VALUES ('117', '14', 'gallery_category_id', 'checkbox', 'Gallery Category Id', '0', '0', '0', '0', '0', '0', null, '6');
-INSERT INTO `data_rows` VALUES ('118', '14', 'image', 'image', 'Image', '0', '0', '1', '1', '1', '1', '{\"resize\":{\"width\":\"1200\",\"height\":null},\"quality\":\"70%\",\"upsize\":true,\"description\":\"大于1200较好\",\"thumbnails\":[{\"name\":\"small\",\"crop\":{\"width\":\"400\",\"height\":\"400\"}}]}', '7');
-INSERT INTO `data_rows` VALUES ('119', '14', 'body', 'rich_text_box', 'Body', '0', '0', '1', '1', '1', '1', null, '8');
-INSERT INTO `data_rows` VALUES ('120', '14', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '9');
-INSERT INTO `data_rows` VALUES ('121', '14', 'meta_description', 'text_area', 'Meta Description', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '10');
-INSERT INTO `data_rows` VALUES ('122', '14', 'meta_keywords', 'text_area', 'Meta Keywords', '0', '0', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"}}', '11');
-INSERT INTO `data_rows` VALUES ('123', '14', 'created_at', 'timestamp', 'Created At', '0', '1', '1', '1', '0', '1', null, '12');
-INSERT INTO `data_rows` VALUES ('124', '14', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '13');
-INSERT INTO `data_rows` VALUES ('125', '14', 'gallery_belongsto_gallery_category_relationship', 'relationship', 'gallery_categories', '0', '1', '1', '1', '1', '1', '{\"model\":\"App\\\\Models\\\\GalleryCategory\",\"table\":\"gallery_categories\",\"type\":\"belongsTo\",\"column\":\"gallery_category_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"articles\",\"pivot\":\"0\"}', '2');
-INSERT INTO `data_rows` VALUES ('126', '2', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '5');
-INSERT INTO `data_rows` VALUES ('142', '16', 'id', 'number', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
-INSERT INTO `data_rows` VALUES ('143', '16', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', null, '2');
-INSERT INTO `data_rows` VALUES ('144', '16', 'email', 'text', 'Email', '0', '1', '1', '1', '1', '1', null, '3');
-INSERT INTO `data_rows` VALUES ('145', '16', 'phone', 'text', 'Phone', '0', '0', '1', '1', '1', '1', null, '4');
-INSERT INTO `data_rows` VALUES ('146', '16', 'subject', 'text', 'Subject', '0', '1', '1', '1', '1', '1', null, '5');
-INSERT INTO `data_rows` VALUES ('147', '16', 'message', 'text', 'Message', '0', '1', '1', '1', '1', '1', null, '6');
-INSERT INTO `data_rows` VALUES ('148', '16', 'url', 'text', 'Url', '0', '0', '1', '1', '1', '1', null, '7');
-INSERT INTO `data_rows` VALUES ('149', '16', 'created_at', 'timestamp', 'Created At', '0', '1', '1', '1', '0', '1', null, '8');
-INSERT INTO `data_rows` VALUES ('150', '16', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '9');
-INSERT INTO `data_rows` VALUES ('151', '8', 'price', 'number', '转化价值（价格*转化率）', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"2\"}}', '5');
+INSERT INTO `data_rows` VALUES ('1', '1', 'id', 'number', 'ID', '1', '0', '0', '0', '0', '0', '', '1');
+INSERT INTO `data_rows` VALUES ('2', '1', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', '', '2');
+INSERT INTO `data_rows` VALUES ('3', '1', 'email', 'text', 'Email', '1', '1', '1', '1', '1', '1', '', '3');
+INSERT INTO `data_rows` VALUES ('4', '1', 'password', 'password', 'Password', '1', '0', '0', '1', '1', '0', '', '4');
+INSERT INTO `data_rows` VALUES ('5', '1', 'remember_token', 'text', 'Remember Token', '0', '0', '0', '0', '0', '0', '', '5');
+INSERT INTO `data_rows` VALUES ('6', '1', 'created_at', 'timestamp', 'Created At', '0', '1', '1', '0', '0', '0', '', '6');
+INSERT INTO `data_rows` VALUES ('7', '1', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', '', '7');
+INSERT INTO `data_rows` VALUES ('8', '1', 'avatar', 'image', 'Avatar', '0', '1', '1', '1', '1', '1', '', '8');
+INSERT INTO `data_rows` VALUES ('9', '1', 'user_belongsto_role_relationship', 'relationship', 'Role', '0', '1', '1', '1', '1', '0', '{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsTo\",\"column\":\"role_id\",\"key\":\"id\",\"label\":\"display_name\",\"pivot_table\":\"roles\",\"pivot\":\"0\"}', '10');
+INSERT INTO `data_rows` VALUES ('10', '1', 'user_belongstomany_role_relationship', 'relationship', 'Roles', '0', '1', '1', '1', '1', '0', '{\"model\":\"TCG\\\\Voyager\\\\Models\\\\Role\",\"table\":\"roles\",\"type\":\"belongsToMany\",\"column\":\"id\",\"key\":\"id\",\"label\":\"display_name\",\"pivot_table\":\"user_roles\",\"pivot\":\"1\",\"taggable\":\"0\"}', '11');
+INSERT INTO `data_rows` VALUES ('11', '1', 'locale', 'text', 'Locale', '0', '1', '1', '1', '1', '0', '', '12');
+INSERT INTO `data_rows` VALUES ('12', '1', 'settings', 'hidden', 'Settings', '0', '0', '0', '0', '0', '0', '', '12');
+INSERT INTO `data_rows` VALUES ('13', '2', 'id', 'number', 'ID', '1', '0', '0', '0', '0', '0', '', '1');
+INSERT INTO `data_rows` VALUES ('14', '2', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', '', '2');
+INSERT INTO `data_rows` VALUES ('15', '2', 'created_at', 'timestamp', 'Created At', '0', '0', '0', '0', '0', '0', '', '3');
+INSERT INTO `data_rows` VALUES ('16', '2', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', '', '4');
+INSERT INTO `data_rows` VALUES ('17', '3', 'id', 'number', 'ID', '1', '0', '0', '0', '0', '0', '', '1');
+INSERT INTO `data_rows` VALUES ('18', '3', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', '', '2');
+INSERT INTO `data_rows` VALUES ('19', '3', 'created_at', 'timestamp', 'Created At', '0', '0', '0', '0', '0', '0', '', '3');
+INSERT INTO `data_rows` VALUES ('20', '3', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', '', '4');
+INSERT INTO `data_rows` VALUES ('21', '3', 'display_name', 'text', 'Display Name', '1', '1', '1', '1', '1', '1', '', '5');
+INSERT INTO `data_rows` VALUES ('22', '1', 'role_id', 'text', 'Role', '1', '1', '1', '1', '1', '1', '', '9');
+INSERT INTO `data_rows` VALUES ('23', '4', 'id', 'number', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
+INSERT INTO `data_rows` VALUES ('24', '4', 'category_id', 'select_dropdown', 'Category Id', '0', '1', '1', '1', '1', '1', null, '4');
+INSERT INTO `data_rows` VALUES ('25', '4', 'name', 'text', '标题', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"5\"},\"validation\":{\"rule\":\"required|unique:articles,name\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '6');
+INSERT INTO `data_rows` VALUES ('26', '4', 'excerpt', 'text_area', '简介', '0', '0', '1', '1', '1', '1', null, '10');
+INSERT INTO `data_rows` VALUES ('27', '4', 'body', 'rich_text_box', '正文', '0', '0', '1', '1', '1', '1', null, '11');
+INSERT INTO `data_rows` VALUES ('28', '4', 'image', 'image', 'Image', '0', '0', '1', '1', '1', '1', '{\"resize\":{\"width\":\"800\",\"height\":null},\"quality\":\"70%\",\"upsize\":true,\"description\":\"最好800像素以上\",\"thumbnails\":[{\"name\":\"small\",\"crop\":{\"width\":\"400\",\"height\":\"300\"}}]}', '9');
+INSERT INTO `data_rows` VALUES ('29', '4', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"4\"},\"validation\":{\"rule\":\"required|unique:articles,slug\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '7');
+INSERT INTO `data_rows` VALUES ('30', '4', 'featured', 'checkbox', '是否重要', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"1\"}}', '8');
+INSERT INTO `data_rows` VALUES ('31', '4', 'published_at', 'date', '发布时间', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"2\"},\"validation\":{\"rule\":\"required\",\"messages\":{\"required\":\"This :attribute field is a must.\"}}}', '5');
+INSERT INTO `data_rows` VALUES ('32', '4', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '12');
+INSERT INTO `data_rows` VALUES ('33', '4', 'meta_description', 'text_area', 'Meta Description', '0', '0', '1', '1', '1', '1', null, '13');
+INSERT INTO `data_rows` VALUES ('34', '4', 'meta_keywords', 'text_area', 'Meta Keywords', '0', '0', '1', '1', '1', '1', null, '14');
+INSERT INTO `data_rows` VALUES ('35', '4', 'created_at', 'timestamp', 'Created At', '0', '0', '1', '0', '0', '1', null, '15');
+INSERT INTO `data_rows` VALUES ('36', '4', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '16');
+INSERT INTO `data_rows` VALUES ('37', '4', 'article_belongsto_category_relationship', 'relationship', '分类', '0', '1', '1', '1', '1', '1', '{\"model\":\"App\\\\Models\\\\Category\",\"table\":\"categories\",\"type\":\"belongsTo\",\"column\":\"category_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"articles\",\"pivot\":\"0\",\"taggable\":\"0\"}', '2');
+INSERT INTO `data_rows` VALUES ('38', '5', 'id', 'text', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
+INSERT INTO `data_rows` VALUES ('39', '5', 'order', 'text', '排序', '1', '1', '1', '1', '1', '1', '{\"default\":1,\"display\":{\"width\":\"1\"}}', '2');
+INSERT INTO `data_rows` VALUES ('40', '5', 'name', 'text', '分类名称', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"required|unique:categories,name\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '3');
+INSERT INTO `data_rows` VALUES ('41', '5', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"5\"},\"validation\":{\"rule\":\"required|unique:categories,slug\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '4');
+INSERT INTO `data_rows` VALUES ('42', '5', 'image', 'image', '主图', '0', '0', '1', '1', '1', '1', '{\"resize\":{\"width\":\"600\",\"height\":\"null\"},\"quality\":\"70%\",\"upsize\":true,\"description\":\"标注下最佳尺寸\"}', '5');
+INSERT INTO `data_rows` VALUES ('43', '5', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '6');
+INSERT INTO `data_rows` VALUES ('44', '5', 'meta_description', 'text_area', 'Meta Description', '0', '0', '1', '1', '1', '1', null, '7');
+INSERT INTO `data_rows` VALUES ('45', '5', 'meta_keywords', 'text_area', 'Meta Keywords', '0', '0', '1', '1', '1', '1', null, '8');
+INSERT INTO `data_rows` VALUES ('46', '5', 'created_at', 'timestamp', 'Created At', '0', '0', '1', '0', '0', '1', null, '9');
+INSERT INTO `data_rows` VALUES ('47', '5', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '10');
+INSERT INTO `data_rows` VALUES ('48', '6', 'id', 'text', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
+INSERT INTO `data_rows` VALUES ('49', '6', 'order', 'text', '排序', '0', '1', '1', '1', '1', '1', '{\"default\":1,\"display\":{\"width\":\"1\"}}', '5');
+INSERT INTO `data_rows` VALUES ('50', '6', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"required|unique:galleries,name\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '6');
+INSERT INTO `data_rows` VALUES ('51', '6', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"5\"},\"validation\":{\"rule\":\"required|unique:galleries,slug\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '7');
+INSERT INTO `data_rows` VALUES ('52', '6', 'gallery_category_id', 'text', 'Gallery Category Id', '0', '1', '1', '1', '1', '1', null, '4');
+INSERT INTO `data_rows` VALUES ('53', '6', 'image', 'image', 'Image', '0', '0', '1', '1', '1', '1', '{\"resize\":{\"width\":\"400\",\"height\":\"400\"},\"quality\":\"70%\",\"upsize\":true,\"description\":\"像素备注\",\"thumbnails\":[{\"name\":\"small\",\"crop\":{\"width\":\"200\",\"height\":\"200\"}}]}', '8');
+INSERT INTO `data_rows` VALUES ('54', '6', 'body', 'rich_text_box', 'Body', '0', '0', '1', '1', '1', '1', null, '9');
+INSERT INTO `data_rows` VALUES ('55', '6', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '10');
+INSERT INTO `data_rows` VALUES ('56', '6', 'meta_description', 'text', 'Meta Description', '0', '0', '1', '1', '1', '1', null, '11');
+INSERT INTO `data_rows` VALUES ('57', '6', 'meta_keywords', 'text', 'Meta Keywords', '0', '0', '1', '1', '1', '1', null, '12');
+INSERT INTO `data_rows` VALUES ('58', '6', 'created_at', 'timestamp', 'Created At', '0', '0', '1', '0', '0', '1', null, '13');
+INSERT INTO `data_rows` VALUES ('59', '6', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '14');
+INSERT INTO `data_rows` VALUES ('60', '6', 'gallery_belongsto_gallery_category_relationship', 'relationship', '分类', '0', '1', '1', '1', '1', '1', '{\"model\":\"App\\\\Models\\\\GalleryCategory\",\"table\":\"gallery_categories\",\"type\":\"belongsTo\",\"column\":\"gallery_category_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"articles\",\"pivot\":\"0\",\"taggable\":\"0\"}', '2');
+INSERT INTO `data_rows` VALUES ('61', '7', 'id', 'text', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
+INSERT INTO `data_rows` VALUES ('62', '7', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"required|unique:gallery_categories,name\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '3');
+INSERT INTO `data_rows` VALUES ('63', '7', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"5\"},\"validation\":{\"rule\":\"required|unique:gallery_categories,slug\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '4');
+INSERT INTO `data_rows` VALUES ('64', '7', 'order', 'text', 'Order', '0', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"1\"},\"default\":1}', '2');
+INSERT INTO `data_rows` VALUES ('65', '7', 'created_at', 'timestamp', 'Created At', '0', '0', '1', '0', '0', '1', null, '5');
+INSERT INTO `data_rows` VALUES ('66', '7', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '6');
+INSERT INTO `data_rows` VALUES ('67', '8', 'id', 'text', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
+INSERT INTO `data_rows` VALUES ('68', '8', 'name', 'text', 'Name', '0', '1', '1', '1', '1', '1', null, '2');
+INSERT INTO `data_rows` VALUES ('69', '8', 'email', 'text', 'Email', '0', '1', '1', '1', '1', '1', null, '3');
+INSERT INTO `data_rows` VALUES ('70', '8', 'phone', 'text', 'Phone', '0', '1', '1', '1', '1', '1', null, '4');
+INSERT INTO `data_rows` VALUES ('71', '8', 'subject', 'text', 'Subject', '0', '1', '1', '1', '1', '1', null, '5');
+INSERT INTO `data_rows` VALUES ('72', '8', 'message', 'text_area', 'Message', '0', '1', '1', '1', '1', '1', null, '6');
+INSERT INTO `data_rows` VALUES ('73', '8', 'url', 'text', 'Url', '0', '0', '1', '1', '1', '1', null, '7');
+INSERT INTO `data_rows` VALUES ('74', '8', 'clientId', 'text', 'ClientId', '0', '0', '1', '1', '1', '1', null, '8');
+INSERT INTO `data_rows` VALUES ('75', '8', 'created_at', 'timestamp', 'Created At', '0', '1', '1', '0', '0', '1', null, '9');
+INSERT INTO `data_rows` VALUES ('76', '8', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '10');
+INSERT INTO `data_rows` VALUES ('77', '9', 'id', 'number', 'Id', '1', '1', '0', '0', '0', '0', null, '1');
+INSERT INTO `data_rows` VALUES ('78', '9', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"required|unique:pages,name\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '2');
+INSERT INTO `data_rows` VALUES ('79', '9', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"required|unique:pages,slug\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '3');
+INSERT INTO `data_rows` VALUES ('80', '9', 'excerpt', 'text', 'Excerpt', '0', '0', '1', '1', '1', '1', null, '5');
+INSERT INTO `data_rows` VALUES ('81', '9', 'body', 'rich_text_box', 'Body', '0', '0', '1', '1', '1', '1', null, '6');
+INSERT INTO `data_rows` VALUES ('82', '9', 'image', 'image', 'Image', '0', '0', '1', '1', '1', '1', null, '4');
+INSERT INTO `data_rows` VALUES ('83', '9', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '7');
+INSERT INTO `data_rows` VALUES ('84', '9', 'meta_description', 'text_area', 'Meta Description', '0', '0', '1', '1', '1', '1', null, '8');
+INSERT INTO `data_rows` VALUES ('85', '9', 'meta_keywords', 'text', 'Meta Keywords', '0', '0', '1', '1', '1', '1', null, '9');
+INSERT INTO `data_rows` VALUES ('86', '9', 'created_at', 'timestamp', 'Created At', '0', '0', '1', '0', '0', '1', null, '10');
+INSERT INTO `data_rows` VALUES ('87', '9', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '11');
+INSERT INTO `data_rows` VALUES ('88', '10', 'id', 'text', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
+INSERT INTO `data_rows` VALUES ('89', '10', 'product_category_id', 'text', 'Product Category Id', '1', '1', '1', '1', '1', '1', null, '4');
+INSERT INTO `data_rows` VALUES ('90', '10', 'name', 'text', '品名', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"4\"},\"validation\":{\"rule\":\"required|unique:products,name\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '5');
+INSERT INTO `data_rows` VALUES ('91', '10', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"2\"},\"validation\":{\"rule\":\"required|unique:products,slug\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '10');
+INSERT INTO `data_rows` VALUES ('92', '10', 'featured', 'checkbox', '是否重要', '0', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"1\"}}', '8');
+INSERT INTO `data_rows` VALUES ('93', '10', 'order', 'text', '排序', '0', '1', '1', '1', '1', '1', '{\"default\":1,\"display\":{\"width\":\"1\"},\"description\":\"小->大\"}', '9');
+INSERT INTO `data_rows` VALUES ('94', '10', 'product_code', 'text', '产品代码', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"2\"},\"validation\":{\"rule\":\"required|unique:products,product_code\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '6');
+INSERT INTO `data_rows` VALUES ('95', '10', 'price', 'text', '价值', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"2\"},\"validation\":{\"rule\":\"required\",\"messages\":{\"required\":\"This :attribute field is a must.\"}},\"description\":\"平均价格*成交率\"}', '7');
+INSERT INTO `data_rows` VALUES ('96', '10', 'image', 'image', 'Image', '0', '0', '1', '1', '1', '1', '{\"resize\":{\"width\":\"600\",\"height\":\"600\"},\"quality\":\"70%\",\"upsize\":true,\"description\":\"600*600较好，即1:1大于600\",\"thumbnails\":[{\"name\":\"small\",\"crop\":{\"width\":\"300\",\"height\":\"300\"}}]}', '11');
+INSERT INTO `data_rows` VALUES ('97', '10', 'excerpt', 'text', '简介', '0', '0', '1', '1', '1', '1', null, '12');
+INSERT INTO `data_rows` VALUES ('98', '10', 'body', 'rich_text_box', '正文', '0', '0', '1', '1', '1', '1', null, '13');
+INSERT INTO `data_rows` VALUES ('99', '10', 'parameter', 'rich_text_box', '参数', '0', '0', '1', '1', '1', '1', null, '14');
+INSERT INTO `data_rows` VALUES ('100', '10', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '15');
+INSERT INTO `data_rows` VALUES ('101', '10', 'meta_description', 'text_area', 'Meta Description', '0', '0', '1', '1', '1', '1', null, '16');
+INSERT INTO `data_rows` VALUES ('102', '10', 'meta_keywords', 'text', 'Meta Keywords', '0', '0', '1', '1', '1', '1', null, '17');
+INSERT INTO `data_rows` VALUES ('103', '10', 'created_at', 'timestamp', 'Created At', '0', '0', '1', '0', '0', '1', null, '18');
+INSERT INTO `data_rows` VALUES ('104', '10', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '19');
+INSERT INTO `data_rows` VALUES ('105', '10', 'product_belongsto_product_category_relationship', 'relationship', '产品分类', '0', '1', '1', '1', '1', '1', '{\"model\":\"App\\\\Models\\\\ProductCategory\",\"table\":\"product_categories\",\"type\":\"belongsTo\",\"column\":\"product_category_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"articles\",\"pivot\":\"0\",\"taggable\":\"0\"}', '2');
+INSERT INTO `data_rows` VALUES ('106', '11', 'id', 'text', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
+INSERT INTO `data_rows` VALUES ('107', '11', 'parent_id', 'select_dropdown', '父分类', '0', '0', '1', '1', '1', '1', '{\"default\":\"\",\"null\":\"\",\"options\":{\"\":\"-- None --\"},\"relationship\":{\"key\":\"id\",\"label\":\"name\"}}', '2');
+INSERT INTO `data_rows` VALUES ('108', '11', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"required|unique:product_categories,name\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '5');
+INSERT INTO `data_rows` VALUES ('109', '11', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"5\"},\"validation\":{\"rule\":\"required|unique:product_categories,slug\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '6');
+INSERT INTO `data_rows` VALUES ('110', '11', 'image', 'image', 'Image', '0', '0', '1', '1', '1', '1', '{\"resize\":{\"width\":\"400\",\"height\":\"400\"},\"quality\":\"70%\",\"upsize\":true,\"description\":\"像素备注\",\"thumbnails\":[{\"name\":\"small\",\"crop\":{\"width\":\"200\",\"height\":\"200\"}}]}', '7');
+INSERT INTO `data_rows` VALUES ('111', '11', 'order', 'text', 'Order', '0', '1', '1', '1', '1', '1', '{\"default\":1,\"display\":{\"width\":\"1\"},\"description\":\"小->大\"}', '4');
+INSERT INTO `data_rows` VALUES ('112', '11', 'excerpt', 'text_area', 'Excerpt', '0', '0', '1', '1', '1', '1', null, '8');
+INSERT INTO `data_rows` VALUES ('113', '11', 'seo_title', 'text', 'Seo Title', '0', '0', '1', '1', '1', '1', null, '9');
+INSERT INTO `data_rows` VALUES ('114', '11', 'meta_description', 'text_area', 'Meta Description', '0', '0', '1', '1', '1', '1', null, '10');
+INSERT INTO `data_rows` VALUES ('115', '11', 'meta_keywords', 'text', 'Meta Keywords', '0', '0', '1', '1', '1', '1', null, '11');
+INSERT INTO `data_rows` VALUES ('116', '11', 'created_at', 'timestamp', 'Created At', '0', '0', '1', '0', '0', '1', null, '12');
+INSERT INTO `data_rows` VALUES ('117', '11', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '13');
+INSERT INTO `data_rows` VALUES ('119', '12', 'id', 'text', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
+INSERT INTO `data_rows` VALUES ('120', '12', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"7\"},\"validation\":{\"rule\":\"required|unique:tags,name\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '2');
+INSERT INTO `data_rows` VALUES ('121', '12', 'description', 'text_area', 'Description', '0', '1', '1', '1', '1', '1', null, '4');
+INSERT INTO `data_rows` VALUES ('122', '12', 'created_at', 'timestamp', 'Created At', '0', '0', '1', '0', '0', '1', null, '5');
+INSERT INTO `data_rows` VALUES ('123', '12', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '6');
+INSERT INTO `data_rows` VALUES ('124', '12', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"5\"},\"validation\":{\"rule\":\"required|unique:tags,slug\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '3');
+INSERT INTO `data_rows` VALUES ('125', '4', 'article_belongstomany_tag_relationship', 'relationship', 'tags', '0', '0', '0', '0', '0', '0', '{\"model\":\"App\\\\Models\\\\Tag\",\"table\":\"tags\",\"type\":\"belongsToMany\",\"column\":\"id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"article_tag\",\"pivot\":\"1\",\"taggable\":\"on\"}', '3');
+INSERT INTO `data_rows` VALUES ('126', '13', 'id', 'text', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
+INSERT INTO `data_rows` VALUES ('127', '13', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"7\"},\"validation\":{\"rule\":\"required|unique:gallery_tags,name\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '2');
+INSERT INTO `data_rows` VALUES ('128', '13', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"5\"},\"validation\":{\"rule\":\"required|unique:gallery_tags,slug\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '3');
+INSERT INTO `data_rows` VALUES ('129', '13', 'description', 'text_area', 'Description', '0', '0', '1', '1', '1', '1', null, '4');
+INSERT INTO `data_rows` VALUES ('130', '13', 'created_at', 'timestamp', 'Created At', '0', '0', '1', '0', '0', '1', null, '5');
+INSERT INTO `data_rows` VALUES ('131', '13', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '6');
+INSERT INTO `data_rows` VALUES ('132', '6', 'gallery_belongstomany_gallery_tag_relationship', 'relationship', 'gallery_tags', '0', '0', '1', '1', '1', '1', '{\"model\":\"App\\\\Models\\\\GalleryTag\",\"table\":\"gallery_tags\",\"type\":\"belongsToMany\",\"column\":\"id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"gallery_gallery_tag\",\"pivot\":\"1\",\"taggable\":\"on\"}', '3');
+INSERT INTO `data_rows` VALUES ('133', '14', 'id', 'text', 'Id', '1', '0', '0', '0', '0', '0', null, '1');
+INSERT INTO `data_rows` VALUES ('134', '14', 'name', 'text', 'Name', '1', '1', '1', '1', '1', '1', '{\"display\":{\"width\":\"7\"},\"validation\":{\"rule\":\"required|unique:product_tags,name\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '2');
+INSERT INTO `data_rows` VALUES ('135', '14', 'slug', 'text', 'Slug', '1', '0', '1', '1', '1', '1', '{\"slugify\":{\"origin\":\"name\"},\"display\":{\"width\":\"5\"},\"validation\":{\"rule\":\"required|unique:product_tags,slug\",\"messages\":{\"required\":\"This :attribute field is a must.\",\"unique\":\"This :attribute field Not allowed to repeat.\"}}}', '3');
+INSERT INTO `data_rows` VALUES ('136', '14', 'description', 'text_area', 'Description', '0', '0', '1', '1', '1', '1', null, '4');
+INSERT INTO `data_rows` VALUES ('137', '14', 'created_at', 'timestamp', 'Created At', '0', '0', '1', '0', '0', '1', null, '5');
+INSERT INTO `data_rows` VALUES ('138', '14', 'updated_at', 'timestamp', 'Updated At', '0', '0', '0', '0', '0', '0', null, '6');
+INSERT INTO `data_rows` VALUES ('139', '10', 'product_belongstomany_product_tag_relationship', 'relationship', 'product_tags', '0', '0', '0', '0', '0', '0', '{\"model\":\"App\\\\Models\\\\ProductTag\",\"table\":\"product_tags\",\"type\":\"belongsToMany\",\"column\":\"id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"product_product_tag\",\"pivot\":\"1\",\"taggable\":\"on\"}', '3');
 
 -- ----------------------------
 -- Table structure for data_types
@@ -231,27 +271,31 @@ CREATE TABLE `data_types` (
   `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `generate_permissions` tinyint(1) NOT NULL DEFAULT '0',
   `server_side` tinyint(4) NOT NULL DEFAULT '0',
+  `details` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `data_types_name_unique` (`name`),
   UNIQUE KEY `data_types_slug_unique` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of data_types
 -- ----------------------------
-INSERT INTO `data_types` VALUES ('2', 'pages', 'pages', 'Page', 'Pages', 'voyager-file-text', 'TCG\\Voyager\\Models\\Page', null, null, null, '1', '0', '2017-09-20 02:12:44', '2017-12-15 08:15:07');
-INSERT INTO `data_types` VALUES ('3', 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', '', '', '1', '0', '2017-09-20 02:12:44', '2017-09-20 02:12:44');
-INSERT INTO `data_types` VALUES ('4', 'categories', 'categories', 'Category', 'Categories', 'voyager-categories', 'TCG\\Voyager\\Models\\Category', null, null, null, '1', '0', '2017-09-20 02:12:44', '2017-12-15 00:59:28');
-INSERT INTO `data_types` VALUES ('5', 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', null, '', '', '1', '0', '2017-09-20 02:12:44', '2017-09-20 02:12:44');
-INSERT INTO `data_types` VALUES ('6', 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', null, '', '', '1', '0', '2017-09-20 02:12:44', '2017-09-20 02:12:44');
-INSERT INTO `data_types` VALUES ('7', 'product_categories', 'product-categories', 'Product Category', 'Product Categories', null, 'App\\Models\\ProductCategory', null, null, null, '1', '0', '2017-12-15 05:24:56', '2017-12-15 05:24:56');
-INSERT INTO `data_types` VALUES ('8', 'products', 'products', 'Product', 'Products', null, 'App\\Models\\Product', null, null, null, '1', '0', '2017-12-15 05:49:49', '2017-12-15 05:49:49');
-INSERT INTO `data_types` VALUES ('9', 'articles', 'articles', 'Article', 'Articles', null, 'App\\Models\\Article', null, null, null, '1', '0', '2017-12-15 06:12:19', '2017-12-15 06:12:19');
-INSERT INTO `data_types` VALUES ('13', 'gallery_categories', 'gallery-categories', 'Gallery Category', 'Gallery Categories', null, 'App\\Models\\GalleryCategory', null, null, null, '1', '0', '2017-12-15 07:07:07', '2017-12-15 07:07:07');
-INSERT INTO `data_types` VALUES ('14', 'galleries', 'galleries', 'Gallery', 'Galleries', null, 'App\\Models\\Gallery', null, null, null, '1', '0', '2017-12-15 07:13:12', '2017-12-15 07:13:12');
-INSERT INTO `data_types` VALUES ('16', 'orders', 'orders', 'Order', 'Orders', null, 'App\\Models\\Order', null, null, null, '1', '0', '2017-12-26 03:11:08', '2017-12-26 03:11:08');
+INSERT INTO `data_types` VALUES ('1', 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', '', '', '1', '0', null, '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `data_types` VALUES ('2', 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', null, '', '', '1', '0', null, '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `data_types` VALUES ('3', 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', null, '', '', '1', '0', null, '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `data_types` VALUES ('4', 'articles', 'articles', 'Article', 'Articles', null, 'App\\Models\\Article', null, null, null, '1', '0', '{\"order_column\":null,\"order_display_column\":null}', '2018-06-25 08:49:41', '2018-06-25 08:49:41');
+INSERT INTO `data_types` VALUES ('5', 'categories', 'categories', 'Category', 'Categories', null, 'App\\Models\\Category', null, null, null, '1', '0', '{\"order_column\":null,\"order_display_column\":null}', '2018-06-25 08:56:19', '2018-06-25 08:56:19');
+INSERT INTO `data_types` VALUES ('6', 'galleries', 'galleries', 'Gallery', 'Galleries', null, 'App\\Models\\Gallery', null, null, null, '1', '0', '{\"order_column\":null,\"order_display_column\":null}', '2018-06-26 01:29:13', '2018-06-26 01:29:13');
+INSERT INTO `data_types` VALUES ('7', 'gallery_categories', 'gallery-categories', 'Gallery Category', 'Gallery Categories', null, 'App\\Models\\GalleryCategory', null, null, null, '1', '0', '{\"order_column\":null,\"order_display_column\":null}', '2018-06-26 01:34:23', '2018-06-26 01:34:23');
+INSERT INTO `data_types` VALUES ('8', 'orders', 'orders', 'Order', 'Orders', null, 'App\\Models\\Order', null, null, null, '1', '0', '{\"order_column\":null,\"order_display_column\":null}', '2018-06-26 01:48:20', '2018-06-26 01:48:20');
+INSERT INTO `data_types` VALUES ('9', 'pages', 'pages', 'Page', 'Pages', null, 'App\\Models\\Page', null, null, null, '1', '0', '{\"order_column\":null,\"order_display_column\":null}', '2018-06-26 01:55:44', '2018-06-26 01:55:44');
+INSERT INTO `data_types` VALUES ('10', 'products', 'products', 'Product', 'Products', null, 'App\\Models\\Product', null, null, null, '1', '0', '{\"order_column\":null,\"order_display_column\":null}', '2018-06-26 02:50:42', '2018-06-26 02:50:42');
+INSERT INTO `data_types` VALUES ('11', 'product_categories', 'product-categories', 'Product Category', 'Product Categories', null, 'App\\Models\\ProductCategory', null, null, null, '1', '0', '{\"order_column\":null,\"order_display_column\":null}', '2018-06-26 03:02:50', '2018-06-26 03:02:50');
+INSERT INTO `data_types` VALUES ('12', 'tags', 'tags', 'Tag', 'Tags', null, 'App\\Models\\Tag', null, null, null, '1', '0', '{\"order_column\":null,\"order_display_column\":null}', '2018-06-26 05:57:48', '2018-06-26 05:57:48');
+INSERT INTO `data_types` VALUES ('13', 'gallery_tags', 'gallery-tags', 'Gallery Tag', 'Gallery Tags', null, 'App\\Models\\GalleryTag', null, null, null, '1', '0', '{\"order_column\":null,\"order_display_column\":null}', '2018-06-26 07:50:41', '2018-06-26 07:50:41');
+INSERT INTO `data_types` VALUES ('14', 'product_tags', 'product-tags', 'Product Tag', 'Product Tags', null, 'App\\Models\\ProductTag', null, null, null, '1', '0', '{\"order_column\":null,\"order_display_column\":null}', '2018-06-26 08:10:23', '2018-06-26 08:10:23');
 
 -- ----------------------------
 -- Table structure for galleries
@@ -259,10 +303,10 @@ INSERT INTO `data_types` VALUES ('16', 'orders', 'orders', 'Order', 'Orders', nu
 DROP TABLE IF EXISTS `galleries`;
 CREATE TABLE `galleries` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `order` int(11) DEFAULT NULL,
+  `order` int(11) DEFAULT '1',
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `gallery_category_id` int(11) DEFAULT NULL,
+  `gallery_category_id` tinyint(4) DEFAULT NULL,
   `image` text COLLATE utf8_unicode_ci,
   `body` text COLLATE utf8_unicode_ci,
   `seo_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -272,14 +316,12 @@ CREATE TABLE `galleries` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `galleries_slug_unique` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of galleries
 -- ----------------------------
-INSERT INTO `galleries` VALUES ('1', '1', 'gallery 1', 'gallery-1-1', '1', 'galleries/December2017/WSRrVrhyodKPkiJH9NyA.jpg', '<p>gallery 1</p>', 'gallery 1 seo', 'gallery 1', 'gallery 1', '2017-12-20 06:08:00', '2017-12-22 07:42:27');
-INSERT INTO `galleries` VALUES ('2', '1', 'gallery 2', 'gallery-2', '2', 'galleries/December2017/yf6z1sti6N3fUFxoy9KY.jpg', '<p>gallery 2</p>', 'gallery 2 seo', 'gallery 2', 'gallery 2', '2017-12-20 06:09:39', '2017-12-20 06:09:39');
-INSERT INTO `galleries` VALUES ('3', '1', 'gallery 3', 'gallery-3', '1', 'galleries/December2017/VqJWLGX7PleLrgnPBne4.jpg', '<p>gallery 3</p>', 'gallery 3 seo', 'gallery 3', 'gallery 3', '2017-12-20 06:23:24', '2017-12-20 06:23:24');
+INSERT INTO `galleries` VALUES ('1', '1', 'Gallery 1', 'gallery-1', null, null, null, null, null, null, '2018-06-26 07:57:47', '2018-06-26 07:57:47');
 
 -- ----------------------------
 -- Table structure for gallery_categories
@@ -289,7 +331,7 @@ CREATE TABLE `gallery_categories` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `order` int(11) DEFAULT NULL,
+  `order` tinyint(4) DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -299,8 +341,46 @@ CREATE TABLE `gallery_categories` (
 -- ----------------------------
 -- Records of gallery_categories
 -- ----------------------------
-INSERT INTO `gallery_categories` VALUES ('1', 'ipl', 'ipl', '1', '2017-12-20 06:06:11', '2017-12-20 06:06:11');
-INSERT INTO `gallery_categories` VALUES ('2', 'elight', 'elight', '1', '2017-12-20 06:06:27', '2017-12-20 06:06:27');
+INSERT INTO `gallery_categories` VALUES ('1', 'gallery categories 1', 'gallery-categories-1', '1', '2018-06-26 03:23:43', '2018-06-26 03:23:43');
+INSERT INTO `gallery_categories` VALUES ('2', 'gallery categories 2', 'gallery-categories-2', '1', '2018-06-26 03:24:00', '2018-06-26 03:24:00');
+
+-- ----------------------------
+-- Table structure for gallery_gallery_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `gallery_gallery_tag`;
+CREATE TABLE `gallery_gallery_tag` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `gallery_id` int(11) DEFAULT NULL,
+  `gallery_tag_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of gallery_gallery_tag
+-- ----------------------------
+INSERT INTO `gallery_gallery_tag` VALUES ('1', '1', '1');
+
+-- ----------------------------
+-- Table structure for gallery_tags
+-- ----------------------------
+DROP TABLE IF EXISTS `gallery_tags`;
+CREATE TABLE `gallery_tags` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `gallery_tags_name_unique` (`name`),
+  UNIQUE KEY `gallery_tags_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of gallery_tags
+-- ----------------------------
+INSERT INTO `gallery_tags` VALUES ('1', 'Gallery Tag 1', 'gallery-tag-1', 'Gallery Tag 1', '2018-06-26 07:56:23', '2018-06-26 07:56:23');
+INSERT INTO `gallery_tags` VALUES ('2', 'Gallery Tag 2', 'gallery-tag-2', 'Gallery Tag 2', '2018-06-26 07:56:38', '2018-06-26 07:56:38');
 
 -- ----------------------------
 -- Table structure for menu_items
@@ -323,30 +403,35 @@ CREATE TABLE `menu_items` (
   PRIMARY KEY (`id`),
   KEY `menu_items_menu_id_foreign` (`menu_id`),
   CONSTRAINT `menu_items_menu_id_foreign` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of menu_items
 -- ----------------------------
-INSERT INTO `menu_items` VALUES ('1', '1', 'Dashboard', '', '_self', 'voyager-boat', null, null, '1', '2017-09-20 02:12:44', '2017-09-20 02:12:44', 'voyager.dashboard', null);
-INSERT INTO `menu_items` VALUES ('2', '1', 'Media', '', '_self', 'voyager-images', null, null, '4', '2017-09-20 02:12:44', '2017-12-15 07:18:54', 'voyager.media.index', null);
-INSERT INTO `menu_items` VALUES ('4', '1', 'Users', '', '_self', 'voyager-person', null, null, '3', '2017-09-20 02:12:44', '2017-09-20 02:12:44', 'voyager.users.index', null);
-INSERT INTO `menu_items` VALUES ('5', '1', '文章分类', '', '_self', 'voyager-file-text', '#000000', '20', '4', '2017-09-20 02:12:44', '2017-12-15 07:24:14', 'voyager.categories.index', 'null');
-INSERT INTO `menu_items` VALUES ('6', '1', '主要页面', '', '_self', 'voyager-file-text', '#000000', '20', '7', '2017-09-20 02:12:44', '2017-12-15 07:22:53', 'voyager.pages.index', 'null');
-INSERT INTO `menu_items` VALUES ('7', '1', 'Roles', '', '_self', 'voyager-lock', null, null, '2', '2017-09-20 02:12:44', '2017-09-20 02:12:44', 'voyager.roles.index', null);
-INSERT INTO `menu_items` VALUES ('8', '1', 'Tools', '', '_self', 'voyager-tools', null, null, '7', '2017-09-20 02:12:44', '2017-12-26 01:14:39', null, null);
-INSERT INTO `menu_items` VALUES ('9', '1', 'Menu Builder', '', '_self', 'voyager-list', null, '8', '1', '2017-09-20 02:12:44', '2017-12-15 07:18:54', 'voyager.menus.index', null);
-INSERT INTO `menu_items` VALUES ('10', '1', 'Database', '', '_self', 'voyager-data', null, '8', '2', '2017-09-20 02:12:44', '2017-12-15 07:18:54', 'voyager.database.index', null);
-INSERT INTO `menu_items` VALUES ('11', '1', 'Compass', '/admin/compass', '_self', 'voyager-compass', null, '8', '3', '2017-09-20 02:12:44', '2017-12-15 07:18:54', null, null);
-INSERT INTO `menu_items` VALUES ('12', '1', 'Hooks', '/admin/hooks', '_self', 'voyager-hook', null, '8', '4', '2017-09-20 02:12:44', '2017-12-15 07:18:54', null, null);
-INSERT INTO `menu_items` VALUES ('13', '1', 'Settings', '', '_self', 'voyager-settings', null, null, '8', '2017-09-20 02:12:44', '2017-12-26 01:14:33', 'voyager.settings.index', null);
-INSERT INTO `menu_items` VALUES ('14', '1', '产品分类', '/admin/product-categories', '_self', 'voyager-shop', '#000000', '20', '2', '2017-12-15 05:24:57', '2017-12-15 07:23:33', null, '');
-INSERT INTO `menu_items` VALUES ('15', '1', '产品', '/admin/products', '_self', 'voyager-shop', '#000000', '20', '1', '2017-12-15 05:49:51', '2017-12-15 07:23:21', null, '');
-INSERT INTO `menu_items` VALUES ('16', '1', '文章', '/admin/articles', '_self', 'voyager-file-text', '#000000', '20', '3', '2017-12-15 06:12:21', '2017-12-15 07:23:51', null, '');
-INSERT INTO `menu_items` VALUES ('18', '1', '案例分类', '/admin/gallery-categories', '_self', 'voyager-images', '#000000', '20', '6', '2017-12-15 07:07:08', '2017-12-15 07:25:10', null, '');
-INSERT INTO `menu_items` VALUES ('19', '1', '案例', '/admin/galleries', '_self', 'voyager-images', '#000000', '20', '5', '2017-12-15 07:13:14', '2017-12-15 07:24:56', null, '');
-INSERT INTO `menu_items` VALUES ('20', '1', '发布管理', '', '_self', 'voyager-folder', '#000000', null, '5', '2017-12-15 07:18:41', '2017-12-15 07:20:51', null, '');
-INSERT INTO `menu_items` VALUES ('22', '1', '留言', '/admin/orders', '_self', 'voyager-heart', '#000000', null, '6', '2017-12-26 03:11:10', '2017-12-26 03:12:18', null, '');
+INSERT INTO `menu_items` VALUES ('1', '1', 'Dashboard', '', '_self', 'voyager-boat', null, null, '1', '2018-06-25 06:49:25', '2018-06-25 06:49:25', 'voyager.dashboard', null);
+INSERT INTO `menu_items` VALUES ('2', '1', 'Media', '', '_self', 'voyager-images', null, null, '4', '2018-06-25 06:49:25', '2018-06-27 05:21:53', 'voyager.media.index', null);
+INSERT INTO `menu_items` VALUES ('3', '1', 'Users', '', '_self', 'voyager-person', null, null, '3', '2018-06-25 06:49:25', '2018-06-25 06:49:25', 'voyager.users.index', null);
+INSERT INTO `menu_items` VALUES ('4', '1', 'Roles', '', '_self', 'voyager-lock', null, null, '2', '2018-06-25 06:49:25', '2018-06-25 06:49:25', 'voyager.roles.index', null);
+INSERT INTO `menu_items` VALUES ('5', '1', 'Tools', '', '_self', 'voyager-tools', null, null, '7', '2018-06-25 06:49:25', '2018-06-27 05:27:48', null, null);
+INSERT INTO `menu_items` VALUES ('6', '1', 'Menu Builder', '', '_self', 'voyager-list', null, '5', '1', '2018-06-25 06:49:25', '2018-06-27 05:21:53', 'voyager.menus.index', null);
+INSERT INTO `menu_items` VALUES ('7', '1', 'Database', '', '_self', 'voyager-data', null, '5', '2', '2018-06-25 06:49:25', '2018-06-27 05:21:53', 'voyager.database.index', null);
+INSERT INTO `menu_items` VALUES ('8', '1', 'Compass', '', '_self', 'voyager-compass', null, '5', '3', '2018-06-25 06:49:25', '2018-06-27 05:21:53', 'voyager.compass.index', null);
+INSERT INTO `menu_items` VALUES ('9', '1', 'BREAD', '', '_self', 'voyager-bread', null, '5', '4', '2018-06-25 06:49:25', '2018-06-27 05:21:53', 'voyager.bread.index', null);
+INSERT INTO `menu_items` VALUES ('10', '1', 'Settings', '', '_self', 'voyager-settings', null, null, '8', '2018-06-25 06:49:25', '2018-06-27 05:27:48', 'voyager.settings.index', null);
+INSERT INTO `menu_items` VALUES ('11', '1', 'Hooks', '', '_self', 'voyager-hook', null, '5', '5', '2018-06-25 06:49:25', '2018-06-27 05:21:53', 'voyager.hooks', null);
+INSERT INTO `menu_items` VALUES ('12', '1', '缓存清理', '/cache_clear', '_self', 'voyager-brush', '#000000', null, '9', '2018-06-25 08:18:13', '2018-06-27 05:27:48', null, '');
+INSERT INTO `menu_items` VALUES ('13', '1', '文章', '', '_self', 'voyager-file-text', '#000000', '24', '4', '2018-06-25 08:49:43', '2018-06-27 05:26:24', 'voyager.articles.index', 'null');
+INSERT INTO `menu_items` VALUES ('14', '1', '文章分类', '', '_self', 'voyager-file-text', '#000000', '24', '5', '2018-06-25 08:56:21', '2018-06-27 05:26:41', 'voyager.categories.index', 'null');
+INSERT INTO `menu_items` VALUES ('15', '1', '图库或案例', '', '_self', 'voyager-images', '#000000', '24', '7', '2018-06-26 01:29:15', '2018-06-27 05:26:11', 'voyager.galleries.index', 'null');
+INSERT INTO `menu_items` VALUES ('16', '1', '案例分类', '', '_self', 'voyager-images', '#000000', '24', '8', '2018-06-26 01:34:24', '2018-06-27 05:26:11', 'voyager.gallery-categories.index', 'null');
+INSERT INTO `menu_items` VALUES ('17', '1', '订单/留言', '', '_self', 'voyager-heart', '#000000', null, '6', '2018-06-26 01:48:22', '2018-06-27 05:27:48', 'voyager.orders.index', 'null');
+INSERT INTO `menu_items` VALUES ('18', '1', '主要页面', '', '_self', 'voyager-file-text', '#000000', '24', '10', '2018-06-26 01:55:45', '2018-06-27 05:27:21', 'voyager.pages.index', 'null');
+INSERT INTO `menu_items` VALUES ('19', '1', '产品', '', '_self', 'voyager-shop', '#000000', '24', '1', '2018-06-26 02:50:43', '2018-06-27 05:22:21', 'voyager.products.index', 'null');
+INSERT INTO `menu_items` VALUES ('20', '1', '产品分类', '', '_self', 'voyager-shop', '#000000', '24', '2', '2018-06-26 03:02:52', '2018-06-27 05:22:36', 'voyager.product-categories.index', 'null');
+INSERT INTO `menu_items` VALUES ('21', '1', '文章标签', '', '_self', 'voyager-file-text', '#000000', '24', '6', '2018-06-26 05:57:49', '2018-06-27 05:26:57', 'voyager.tags.index', 'null');
+INSERT INTO `menu_items` VALUES ('22', '1', '案例标签', '', '_self', 'voyager-images', '#000000', '24', '9', '2018-06-26 07:50:42', '2018-06-27 05:26:12', 'voyager.gallery-tags.index', 'null');
+INSERT INTO `menu_items` VALUES ('23', '1', '产品标签', '', '_self', 'voyager-shop', '#000000', '24', '3', '2018-06-26 08:10:24', '2018-06-27 05:22:51', 'voyager.product-tags.index', 'null');
+INSERT INTO `menu_items` VALUES ('24', '1', '发布管理', '', '_self', 'voyager-folder', '#000000', null, '5', '2018-06-27 05:21:28', '2018-06-27 05:27:36', null, '');
 
 -- ----------------------------
 -- Table structure for menus
@@ -364,7 +449,7 @@ CREATE TABLE `menus` (
 -- ----------------------------
 -- Records of menus
 -- ----------------------------
-INSERT INTO `menus` VALUES ('1', 'admin', '2017-09-20 02:12:44', '2017-09-20 02:12:44');
+INSERT INTO `menus` VALUES ('1', 'admin', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
 
 -- ----------------------------
 -- Table structure for migrations
@@ -375,7 +460,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of migrations
@@ -384,25 +469,24 @@ INSERT INTO `migrations` VALUES ('1', '2014_10_12_000000_create_users_table', '1
 INSERT INTO `migrations` VALUES ('2', '2014_10_12_100000_create_password_resets_table', '1');
 INSERT INTO `migrations` VALUES ('3', '2016_01_01_000000_add_voyager_user_fields', '1');
 INSERT INTO `migrations` VALUES ('4', '2016_01_01_000000_create_data_types_table', '1');
-INSERT INTO `migrations` VALUES ('5', '2016_01_01_000000_create_pages_table', '1');
-INSERT INTO `migrations` VALUES ('6', '2016_01_01_000000_create_posts_table', '1');
-INSERT INTO `migrations` VALUES ('7', '2016_02_15_204651_create_categories_table', '1');
-INSERT INTO `migrations` VALUES ('8', '2016_05_19_173453_create_menu_table', '1');
-INSERT INTO `migrations` VALUES ('9', '2016_10_21_190000_create_roles_table', '1');
-INSERT INTO `migrations` VALUES ('10', '2016_10_21_190000_create_settings_table', '1');
-INSERT INTO `migrations` VALUES ('11', '2016_11_30_135954_create_permission_table', '1');
-INSERT INTO `migrations` VALUES ('12', '2016_11_30_141208_create_permission_role_table', '1');
-INSERT INTO `migrations` VALUES ('13', '2016_12_26_201236_data_types__add__server_side', '1');
-INSERT INTO `migrations` VALUES ('14', '2017_01_13_000000_add_route_to_menu_items_table', '1');
-INSERT INTO `migrations` VALUES ('15', '2017_01_14_005015_create_translations_table', '1');
-INSERT INTO `migrations` VALUES ('16', '2017_01_15_000000_add_permission_group_id_to_permissions_table', '1');
-INSERT INTO `migrations` VALUES ('17', '2017_01_15_000000_create_permission_groups_table', '1');
-INSERT INTO `migrations` VALUES ('18', '2017_01_15_000000_make_table_name_nullable_in_permissions_table', '1');
-INSERT INTO `migrations` VALUES ('19', '2017_03_06_000000_add_controller_to_data_types_table', '1');
-INSERT INTO `migrations` VALUES ('20', '2017_04_21_000000_add_order_to_data_rows_table', '1');
-INSERT INTO `migrations` VALUES ('21', '2017_07_05_210000_add_policyname_to_data_types_table', '1');
-INSERT INTO `migrations` VALUES ('22', '2017_08_05_000000_add_group_to_settings_table', '1');
-INSERT INTO `migrations` VALUES ('23', '2017_11_04_000000_alter_post_nullable_fields_table', '1');
+INSERT INTO `migrations` VALUES ('5', '2016_05_19_173453_create_menu_table', '1');
+INSERT INTO `migrations` VALUES ('6', '2016_10_21_190000_create_roles_table', '1');
+INSERT INTO `migrations` VALUES ('7', '2016_10_21_190000_create_settings_table', '1');
+INSERT INTO `migrations` VALUES ('8', '2016_11_30_135954_create_permission_table', '1');
+INSERT INTO `migrations` VALUES ('9', '2016_11_30_141208_create_permission_role_table', '1');
+INSERT INTO `migrations` VALUES ('10', '2016_12_26_201236_data_types__add__server_side', '1');
+INSERT INTO `migrations` VALUES ('11', '2017_01_13_000000_add_route_to_menu_items_table', '1');
+INSERT INTO `migrations` VALUES ('12', '2017_01_14_005015_create_translations_table', '1');
+INSERT INTO `migrations` VALUES ('13', '2017_01_15_000000_make_table_name_nullable_in_permissions_table', '1');
+INSERT INTO `migrations` VALUES ('14', '2017_03_06_000000_add_controller_to_data_types_table', '1');
+INSERT INTO `migrations` VALUES ('15', '2017_04_21_000000_add_order_to_data_rows_table', '1');
+INSERT INTO `migrations` VALUES ('16', '2017_07_05_210000_add_policyname_to_data_types_table', '1');
+INSERT INTO `migrations` VALUES ('17', '2017_08_05_000000_add_group_to_settings_table', '1');
+INSERT INTO `migrations` VALUES ('18', '2017_11_26_013050_add_user_role_relationship', '1');
+INSERT INTO `migrations` VALUES ('19', '2017_11_26_015000_create_user_roles_table', '1');
+INSERT INTO `migrations` VALUES ('20', '2018_03_11_000000_add_user_settings', '1');
+INSERT INTO `migrations` VALUES ('21', '2018_03_14_000000_add_details_to_data_types_table', '1');
+INSERT INTO `migrations` VALUES ('22', '2018_03_16_000000_make_settings_value_nullable', '1');
 
 -- ----------------------------
 -- Table structure for orders
@@ -410,23 +494,22 @@ INSERT INTO `migrations` VALUES ('23', '2017_11_04_000000_alter_post_nullable_fi
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `subject` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `message` text COLLATE utf8_unicode_ci,
   `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `clientId` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('13', '11', '11@qq.com', 'das', 'dsa', 'a', 'http://anycar.test/contact_us', '2017-12-26 08:22:39', '2017-12-26 08:22:39');
-INSERT INTO `orders` VALUES ('14', '111', '111@q.com', '11', '111', '111', 'http://anycar.test/contact_us', '2017-12-26 08:23:41', '2017-12-26 08:23:41');
-INSERT INTO `orders` VALUES ('15', '111', '111@q.com', '11', '111', '111', 'http://anycar.test/contact_us', '2017-12-26 08:24:05', '2017-12-26 08:24:05');
+INSERT INTO `orders` VALUES ('1', 'test', 'test@gmail.com', '1111', '213', '2121211212', null, null, '2018-06-26 03:25:48', '2018-06-26 03:25:48');
 
 -- ----------------------------
 -- Table structure for pages
@@ -434,28 +517,27 @@ INSERT INTO `orders` VALUES ('15', '111', '111@q.com', '11', '111', '111', 'http
 DROP TABLE IF EXISTS `pages`;
 CREATE TABLE `pages` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `author_id` int(11) NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `excerpt` text COLLATE utf8mb4_unicode_ci,
-  `body` text COLLATE utf8mb4_unicode_ci,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci,
-  `meta_keywords` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `excerpt` text COLLATE utf8_unicode_ci,
+  `body` text COLLATE utf8_unicode_ci,
+  `image` text COLLATE utf8_unicode_ci,
+  `seo_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_description` text COLLATE utf8_unicode_ci,
+  `meta_keywords` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `seo_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pages_slug_unique` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of pages
 -- ----------------------------
-INSERT INTO `pages` VALUES ('1', '1', 'index title', 'index', '<p>index index</p>', null, 'index-title', 'index', 'index', '2017-12-15 08:24:37', '2017-12-15 08:24:37', 'index seo title');
-INSERT INTO `pages` VALUES ('2', '1', 'about us', 'about us', '<p>about us 1 2 3</p>', null, 'about-us', 'about us', 'about us', '2017-12-15 08:26:07', '2017-12-21 08:41:20', 'about us title');
-INSERT INTO `pages` VALUES ('3', '1', 'contact us', 'contact us', '<p>contact us&nbsp;contact us</p>', null, 'contact-us', 'contact us', 'contact us', '2017-12-15 08:26:43', '2017-12-15 08:26:43', 'contact us seo title');
-INSERT INTO `pages` VALUES ('4', '1', 'service', 'service excerpt', '<p>service body</p>', null, 'service', 'service', 'service', '2017-12-20 05:37:55', '2017-12-20 05:37:55', 'service seo');
+INSERT INTO `pages` VALUES ('1', 'index', 'index', null, null, null, 'index seo title', null, null, '2018-06-26 03:19:30', '2018-07-20 07:36:12');
+INSERT INTO `pages` VALUES ('2', 'about us', 'about-us', null, '<p>about us 1 2 3</p>', null, null, null, null, '2018-07-20 07:36:51', '2018-07-20 07:36:51');
+INSERT INTO `pages` VALUES ('3', 'contact us', 'contact-us', null, '<p><span style=\"color: #76838f; font-family: \'Open Sans\', sans-serif;\">contact us&nbsp;</span><span style=\"color: #76838f; font-family: \'Open Sans\', sans-serif;\">contact us</span></p>', null, null, null, null, '2018-07-20 07:37:24', '2018-07-20 07:37:24');
+INSERT INTO `pages` VALUES ('4', 'service', 'service', null, '<p><span style=\"color: #76838f; font-family: \'Open Sans\', sans-serif;\">service&nbsp;</span><span style=\"color: #76838f; font-family: \'Open Sans\', sans-serif;\">service</span></p>', null, null, null, null, '2018-07-20 07:37:41', '2018-07-20 07:37:41');
 
 -- ----------------------------
 -- Table structure for password_resets
@@ -470,21 +552,6 @@ CREATE TABLE `password_resets` (
 
 -- ----------------------------
 -- Records of password_resets
--- ----------------------------
-
--- ----------------------------
--- Table structure for permission_groups
--- ----------------------------
-DROP TABLE IF EXISTS `permission_groups`;
-CREATE TABLE `permission_groups` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `permission_groups_name_unique` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
--- Records of permission_groups
 -- ----------------------------
 
 -- ----------------------------
@@ -515,11 +582,8 @@ INSERT INTO `permission_role` VALUES ('7', '1');
 INSERT INTO `permission_role` VALUES ('8', '1');
 INSERT INTO `permission_role` VALUES ('9', '1');
 INSERT INTO `permission_role` VALUES ('10', '1');
-INSERT INTO `permission_role` VALUES ('10', '2');
 INSERT INTO `permission_role` VALUES ('11', '1');
-INSERT INTO `permission_role` VALUES ('11', '2');
 INSERT INTO `permission_role` VALUES ('12', '1');
-INSERT INTO `permission_role` VALUES ('12', '2');
 INSERT INTO `permission_role` VALUES ('13', '1');
 INSERT INTO `permission_role` VALUES ('14', '1');
 INSERT INTO `permission_role` VALUES ('15', '1');
@@ -529,9 +593,20 @@ INSERT INTO `permission_role` VALUES ('18', '1');
 INSERT INTO `permission_role` VALUES ('19', '1');
 INSERT INTO `permission_role` VALUES ('20', '1');
 INSERT INTO `permission_role` VALUES ('21', '1');
+INSERT INTO `permission_role` VALUES ('21', '2');
 INSERT INTO `permission_role` VALUES ('22', '1');
+INSERT INTO `permission_role` VALUES ('22', '2');
 INSERT INTO `permission_role` VALUES ('23', '1');
+INSERT INTO `permission_role` VALUES ('23', '2');
 INSERT INTO `permission_role` VALUES ('24', '1');
+INSERT INTO `permission_role` VALUES ('25', '1');
+INSERT INTO `permission_role` VALUES ('26', '1');
+INSERT INTO `permission_role` VALUES ('27', '1');
+INSERT INTO `permission_role` VALUES ('27', '2');
+INSERT INTO `permission_role` VALUES ('28', '1');
+INSERT INTO `permission_role` VALUES ('28', '2');
+INSERT INTO `permission_role` VALUES ('29', '1');
+INSERT INTO `permission_role` VALUES ('29', '2');
 INSERT INTO `permission_role` VALUES ('30', '1');
 INSERT INTO `permission_role` VALUES ('30', '2');
 INSERT INTO `permission_role` VALUES ('31', '1');
@@ -549,7 +624,9 @@ INSERT INTO `permission_role` VALUES ('36', '2');
 INSERT INTO `permission_role` VALUES ('37', '1');
 INSERT INTO `permission_role` VALUES ('37', '2');
 INSERT INTO `permission_role` VALUES ('38', '1');
+INSERT INTO `permission_role` VALUES ('38', '2');
 INSERT INTO `permission_role` VALUES ('39', '1');
+INSERT INTO `permission_role` VALUES ('39', '2');
 INSERT INTO `permission_role` VALUES ('40', '1');
 INSERT INTO `permission_role` VALUES ('40', '2');
 INSERT INTO `permission_role` VALUES ('41', '1');
@@ -569,17 +646,22 @@ INSERT INTO `permission_role` VALUES ('47', '2');
 INSERT INTO `permission_role` VALUES ('48', '1');
 INSERT INTO `permission_role` VALUES ('48', '2');
 INSERT INTO `permission_role` VALUES ('49', '1');
-INSERT INTO `permission_role` VALUES ('49', '2');
 INSERT INTO `permission_role` VALUES ('50', '1');
-INSERT INTO `permission_role` VALUES ('50', '2');
 INSERT INTO `permission_role` VALUES ('51', '1');
-INSERT INTO `permission_role` VALUES ('51', '2');
 INSERT INTO `permission_role` VALUES ('52', '1');
 INSERT INTO `permission_role` VALUES ('52', '2');
 INSERT INTO `permission_role` VALUES ('53', '1');
 INSERT INTO `permission_role` VALUES ('53', '2');
 INSERT INTO `permission_role` VALUES ('54', '1');
 INSERT INTO `permission_role` VALUES ('54', '2');
+INSERT INTO `permission_role` VALUES ('55', '1');
+INSERT INTO `permission_role` VALUES ('56', '1');
+INSERT INTO `permission_role` VALUES ('57', '1');
+INSERT INTO `permission_role` VALUES ('57', '2');
+INSERT INTO `permission_role` VALUES ('58', '1');
+INSERT INTO `permission_role` VALUES ('58', '2');
+INSERT INTO `permission_role` VALUES ('59', '1');
+INSERT INTO `permission_role` VALUES ('59', '2');
 INSERT INTO `permission_role` VALUES ('60', '1');
 INSERT INTO `permission_role` VALUES ('60', '2');
 INSERT INTO `permission_role` VALUES ('61', '1');
@@ -595,16 +677,20 @@ INSERT INTO `permission_role` VALUES ('65', '2');
 INSERT INTO `permission_role` VALUES ('66', '1');
 INSERT INTO `permission_role` VALUES ('66', '2');
 INSERT INTO `permission_role` VALUES ('67', '1');
-INSERT INTO `permission_role` VALUES ('67', '2');
 INSERT INTO `permission_role` VALUES ('68', '1');
-INSERT INTO `permission_role` VALUES ('68', '2');
 INSERT INTO `permission_role` VALUES ('69', '1');
-INSERT INTO `permission_role` VALUES ('69', '2');
+INSERT INTO `permission_role` VALUES ('70', '1');
+INSERT INTO `permission_role` VALUES ('71', '1');
+INSERT INTO `permission_role` VALUES ('72', '1');
+INSERT INTO `permission_role` VALUES ('73', '1');
+INSERT INTO `permission_role` VALUES ('74', '1');
 INSERT INTO `permission_role` VALUES ('75', '1');
 INSERT INTO `permission_role` VALUES ('76', '1');
 INSERT INTO `permission_role` VALUES ('77', '1');
 INSERT INTO `permission_role` VALUES ('78', '1');
 INSERT INTO `permission_role` VALUES ('79', '1');
+INSERT INTO `permission_role` VALUES ('80', '1');
+INSERT INTO `permission_role` VALUES ('81', '1');
 
 -- ----------------------------
 -- Table structure for permissions
@@ -616,78 +702,94 @@ CREATE TABLE `permissions` (
   `table_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `permission_group_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `permissions_key_index` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of permissions
 -- ----------------------------
-INSERT INTO `permissions` VALUES ('1', 'browse_admin', null, '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('2', 'browse_database', null, '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('3', 'browse_media', null, '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('4', 'browse_compass', null, '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('5', 'browse_menus', 'menus', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('6', 'read_menus', 'menus', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('7', 'edit_menus', 'menus', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('8', 'add_menus', 'menus', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('9', 'delete_menus', 'menus', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('10', 'browse_pages', 'pages', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('11', 'read_pages', 'pages', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('12', 'edit_pages', 'pages', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('13', 'add_pages', 'pages', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('14', 'delete_pages', 'pages', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('15', 'browse_roles', 'roles', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('16', 'read_roles', 'roles', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('17', 'edit_roles', 'roles', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('18', 'add_roles', 'roles', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('19', 'delete_roles', 'roles', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('20', 'browse_users', 'users', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('21', 'read_users', 'users', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('22', 'edit_users', 'users', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('23', 'add_users', 'users', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('24', 'delete_users', 'users', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('30', 'browse_categories', 'categories', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('31', 'read_categories', 'categories', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('32', 'edit_categories', 'categories', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('33', 'add_categories', 'categories', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('34', 'delete_categories', 'categories', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('35', 'browse_settings', 'settings', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('36', 'read_settings', 'settings', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('37', 'edit_settings', 'settings', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('38', 'add_settings', 'settings', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('39', 'delete_settings', 'settings', '2017-09-20 02:12:44', '2017-09-20 02:12:44', null);
-INSERT INTO `permissions` VALUES ('40', 'browse_product_categories', 'product_categories', '2017-12-15 05:24:57', '2017-12-15 05:24:57', null);
-INSERT INTO `permissions` VALUES ('41', 'read_product_categories', 'product_categories', '2017-12-15 05:24:57', '2017-12-15 05:24:57', null);
-INSERT INTO `permissions` VALUES ('42', 'edit_product_categories', 'product_categories', '2017-12-15 05:24:57', '2017-12-15 05:24:57', null);
-INSERT INTO `permissions` VALUES ('43', 'add_product_categories', 'product_categories', '2017-12-15 05:24:57', '2017-12-15 05:24:57', null);
-INSERT INTO `permissions` VALUES ('44', 'delete_product_categories', 'product_categories', '2017-12-15 05:24:57', '2017-12-15 05:24:57', null);
-INSERT INTO `permissions` VALUES ('45', 'browse_products', 'products', '2017-12-15 05:49:51', '2017-12-15 05:49:51', null);
-INSERT INTO `permissions` VALUES ('46', 'read_products', 'products', '2017-12-15 05:49:51', '2017-12-15 05:49:51', null);
-INSERT INTO `permissions` VALUES ('47', 'edit_products', 'products', '2017-12-15 05:49:51', '2017-12-15 05:49:51', null);
-INSERT INTO `permissions` VALUES ('48', 'add_products', 'products', '2017-12-15 05:49:51', '2017-12-15 05:49:51', null);
-INSERT INTO `permissions` VALUES ('49', 'delete_products', 'products', '2017-12-15 05:49:51', '2017-12-15 05:49:51', null);
-INSERT INTO `permissions` VALUES ('50', 'browse_articles', 'articles', '2017-12-15 06:12:20', '2017-12-15 06:12:20', null);
-INSERT INTO `permissions` VALUES ('51', 'read_articles', 'articles', '2017-12-15 06:12:20', '2017-12-15 06:12:20', null);
-INSERT INTO `permissions` VALUES ('52', 'edit_articles', 'articles', '2017-12-15 06:12:20', '2017-12-15 06:12:20', null);
-INSERT INTO `permissions` VALUES ('53', 'add_articles', 'articles', '2017-12-15 06:12:20', '2017-12-15 06:12:20', null);
-INSERT INTO `permissions` VALUES ('54', 'delete_articles', 'articles', '2017-12-15 06:12:20', '2017-12-15 06:12:20', null);
-INSERT INTO `permissions` VALUES ('60', 'browse_gallery_categories', 'gallery_categories', '2017-12-15 07:07:07', '2017-12-15 07:07:07', null);
-INSERT INTO `permissions` VALUES ('61', 'read_gallery_categories', 'gallery_categories', '2017-12-15 07:07:07', '2017-12-15 07:07:07', null);
-INSERT INTO `permissions` VALUES ('62', 'edit_gallery_categories', 'gallery_categories', '2017-12-15 07:07:07', '2017-12-15 07:07:07', null);
-INSERT INTO `permissions` VALUES ('63', 'add_gallery_categories', 'gallery_categories', '2017-12-15 07:07:08', '2017-12-15 07:07:08', null);
-INSERT INTO `permissions` VALUES ('64', 'delete_gallery_categories', 'gallery_categories', '2017-12-15 07:07:08', '2017-12-15 07:07:08', null);
-INSERT INTO `permissions` VALUES ('65', 'browse_galleries', 'galleries', '2017-12-15 07:13:13', '2017-12-15 07:13:13', null);
-INSERT INTO `permissions` VALUES ('66', 'read_galleries', 'galleries', '2017-12-15 07:13:13', '2017-12-15 07:13:13', null);
-INSERT INTO `permissions` VALUES ('67', 'edit_galleries', 'galleries', '2017-12-15 07:13:14', '2017-12-15 07:13:14', null);
-INSERT INTO `permissions` VALUES ('68', 'add_galleries', 'galleries', '2017-12-15 07:13:14', '2017-12-15 07:13:14', null);
-INSERT INTO `permissions` VALUES ('69', 'delete_galleries', 'galleries', '2017-12-15 07:13:14', '2017-12-15 07:13:14', null);
-INSERT INTO `permissions` VALUES ('75', 'browse_orders', 'orders', '2017-12-26 03:11:09', '2017-12-26 03:11:09', null);
-INSERT INTO `permissions` VALUES ('76', 'read_orders', 'orders', '2017-12-26 03:11:09', '2017-12-26 03:11:09', null);
-INSERT INTO `permissions` VALUES ('77', 'edit_orders', 'orders', '2017-12-26 03:11:09', '2017-12-26 03:11:09', null);
-INSERT INTO `permissions` VALUES ('78', 'add_orders', 'orders', '2017-12-26 03:11:10', '2017-12-26 03:11:10', null);
-INSERT INTO `permissions` VALUES ('79', 'delete_orders', 'orders', '2017-12-26 03:11:10', '2017-12-26 03:11:10', null);
+INSERT INTO `permissions` VALUES ('1', 'browse_admin', null, '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('2', 'browse_bread', null, '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('3', 'browse_database', null, '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('4', 'browse_media', null, '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('5', 'browse_compass', null, '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('6', 'browse_menus', 'menus', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('7', 'read_menus', 'menus', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('8', 'edit_menus', 'menus', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('9', 'add_menus', 'menus', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('10', 'delete_menus', 'menus', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('11', 'browse_roles', 'roles', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('12', 'read_roles', 'roles', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('13', 'edit_roles', 'roles', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('14', 'add_roles', 'roles', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('15', 'delete_roles', 'roles', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('16', 'browse_users', 'users', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('17', 'read_users', 'users', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('18', 'edit_users', 'users', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('19', 'add_users', 'users', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('20', 'delete_users', 'users', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('21', 'browse_settings', 'settings', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('22', 'read_settings', 'settings', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('23', 'edit_settings', 'settings', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('24', 'add_settings', 'settings', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('25', 'delete_settings', 'settings', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('26', 'browse_hooks', null, '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `permissions` VALUES ('27', 'browse_articles', 'articles', '2018-06-25 08:49:42', '2018-06-25 08:49:42');
+INSERT INTO `permissions` VALUES ('28', 'read_articles', 'articles', '2018-06-25 08:49:42', '2018-06-25 08:49:42');
+INSERT INTO `permissions` VALUES ('29', 'edit_articles', 'articles', '2018-06-25 08:49:42', '2018-06-25 08:49:42');
+INSERT INTO `permissions` VALUES ('30', 'add_articles', 'articles', '2018-06-25 08:49:42', '2018-06-25 08:49:42');
+INSERT INTO `permissions` VALUES ('31', 'delete_articles', 'articles', '2018-06-25 08:49:42', '2018-06-25 08:49:42');
+INSERT INTO `permissions` VALUES ('32', 'browse_categories', 'categories', '2018-06-25 08:56:20', '2018-06-25 08:56:20');
+INSERT INTO `permissions` VALUES ('33', 'read_categories', 'categories', '2018-06-25 08:56:20', '2018-06-25 08:56:20');
+INSERT INTO `permissions` VALUES ('34', 'edit_categories', 'categories', '2018-06-25 08:56:21', '2018-06-25 08:56:21');
+INSERT INTO `permissions` VALUES ('35', 'add_categories', 'categories', '2018-06-25 08:56:21', '2018-06-25 08:56:21');
+INSERT INTO `permissions` VALUES ('36', 'delete_categories', 'categories', '2018-06-25 08:56:21', '2018-06-25 08:56:21');
+INSERT INTO `permissions` VALUES ('37', 'browse_galleries', 'galleries', '2018-06-26 01:29:15', '2018-06-26 01:29:15');
+INSERT INTO `permissions` VALUES ('38', 'read_galleries', 'galleries', '2018-06-26 01:29:15', '2018-06-26 01:29:15');
+INSERT INTO `permissions` VALUES ('39', 'edit_galleries', 'galleries', '2018-06-26 01:29:15', '2018-06-26 01:29:15');
+INSERT INTO `permissions` VALUES ('40', 'add_galleries', 'galleries', '2018-06-26 01:29:15', '2018-06-26 01:29:15');
+INSERT INTO `permissions` VALUES ('41', 'delete_galleries', 'galleries', '2018-06-26 01:29:15', '2018-06-26 01:29:15');
+INSERT INTO `permissions` VALUES ('42', 'browse_gallery_categories', 'gallery_categories', '2018-06-26 01:34:23', '2018-06-26 01:34:23');
+INSERT INTO `permissions` VALUES ('43', 'read_gallery_categories', 'gallery_categories', '2018-06-26 01:34:23', '2018-06-26 01:34:23');
+INSERT INTO `permissions` VALUES ('44', 'edit_gallery_categories', 'gallery_categories', '2018-06-26 01:34:23', '2018-06-26 01:34:23');
+INSERT INTO `permissions` VALUES ('45', 'add_gallery_categories', 'gallery_categories', '2018-06-26 01:34:24', '2018-06-26 01:34:24');
+INSERT INTO `permissions` VALUES ('46', 'delete_gallery_categories', 'gallery_categories', '2018-06-26 01:34:24', '2018-06-26 01:34:24');
+INSERT INTO `permissions` VALUES ('47', 'browse_orders', 'orders', '2018-06-26 01:48:21', '2018-06-26 01:48:21');
+INSERT INTO `permissions` VALUES ('48', 'read_orders', 'orders', '2018-06-26 01:48:21', '2018-06-26 01:48:21');
+INSERT INTO `permissions` VALUES ('49', 'edit_orders', 'orders', '2018-06-26 01:48:21', '2018-06-26 01:48:21');
+INSERT INTO `permissions` VALUES ('50', 'add_orders', 'orders', '2018-06-26 01:48:21', '2018-06-26 01:48:21');
+INSERT INTO `permissions` VALUES ('51', 'delete_orders', 'orders', '2018-06-26 01:48:22', '2018-06-26 01:48:22');
+INSERT INTO `permissions` VALUES ('52', 'browse_pages', 'pages', '2018-06-26 01:55:45', '2018-06-26 01:55:45');
+INSERT INTO `permissions` VALUES ('53', 'read_pages', 'pages', '2018-06-26 01:55:45', '2018-06-26 01:55:45');
+INSERT INTO `permissions` VALUES ('54', 'edit_pages', 'pages', '2018-06-26 01:55:45', '2018-06-26 01:55:45');
+INSERT INTO `permissions` VALUES ('55', 'add_pages', 'pages', '2018-06-26 01:55:45', '2018-06-26 01:55:45');
+INSERT INTO `permissions` VALUES ('56', 'delete_pages', 'pages', '2018-06-26 01:55:45', '2018-06-26 01:55:45');
+INSERT INTO `permissions` VALUES ('57', 'browse_products', 'products', '2018-06-26 02:50:43', '2018-06-26 02:50:43');
+INSERT INTO `permissions` VALUES ('58', 'read_products', 'products', '2018-06-26 02:50:43', '2018-06-26 02:50:43');
+INSERT INTO `permissions` VALUES ('59', 'edit_products', 'products', '2018-06-26 02:50:43', '2018-06-26 02:50:43');
+INSERT INTO `permissions` VALUES ('60', 'add_products', 'products', '2018-06-26 02:50:43', '2018-06-26 02:50:43');
+INSERT INTO `permissions` VALUES ('61', 'delete_products', 'products', '2018-06-26 02:50:43', '2018-06-26 02:50:43');
+INSERT INTO `permissions` VALUES ('62', 'browse_product_categories', 'product_categories', '2018-06-26 03:02:52', '2018-06-26 03:02:52');
+INSERT INTO `permissions` VALUES ('63', 'read_product_categories', 'product_categories', '2018-06-26 03:02:52', '2018-06-26 03:02:52');
+INSERT INTO `permissions` VALUES ('64', 'edit_product_categories', 'product_categories', '2018-06-26 03:02:52', '2018-06-26 03:02:52');
+INSERT INTO `permissions` VALUES ('65', 'add_product_categories', 'product_categories', '2018-06-26 03:02:52', '2018-06-26 03:02:52');
+INSERT INTO `permissions` VALUES ('66', 'delete_product_categories', 'product_categories', '2018-06-26 03:02:52', '2018-06-26 03:02:52');
+INSERT INTO `permissions` VALUES ('67', 'browse_tags', 'tags', '2018-06-26 05:57:49', '2018-06-26 05:57:49');
+INSERT INTO `permissions` VALUES ('68', 'read_tags', 'tags', '2018-06-26 05:57:49', '2018-06-26 05:57:49');
+INSERT INTO `permissions` VALUES ('69', 'edit_tags', 'tags', '2018-06-26 05:57:49', '2018-06-26 05:57:49');
+INSERT INTO `permissions` VALUES ('70', 'add_tags', 'tags', '2018-06-26 05:57:49', '2018-06-26 05:57:49');
+INSERT INTO `permissions` VALUES ('71', 'delete_tags', 'tags', '2018-06-26 05:57:49', '2018-06-26 05:57:49');
+INSERT INTO `permissions` VALUES ('72', 'browse_gallery_tags', 'gallery_tags', '2018-06-26 07:50:41', '2018-06-26 07:50:41');
+INSERT INTO `permissions` VALUES ('73', 'read_gallery_tags', 'gallery_tags', '2018-06-26 07:50:41', '2018-06-26 07:50:41');
+INSERT INTO `permissions` VALUES ('74', 'edit_gallery_tags', 'gallery_tags', '2018-06-26 07:50:41', '2018-06-26 07:50:41');
+INSERT INTO `permissions` VALUES ('75', 'add_gallery_tags', 'gallery_tags', '2018-06-26 07:50:41', '2018-06-26 07:50:41');
+INSERT INTO `permissions` VALUES ('76', 'delete_gallery_tags', 'gallery_tags', '2018-06-26 07:50:41', '2018-06-26 07:50:41');
+INSERT INTO `permissions` VALUES ('77', 'browse_product_tags', 'product_tags', '2018-06-26 08:10:24', '2018-06-26 08:10:24');
+INSERT INTO `permissions` VALUES ('78', 'read_product_tags', 'product_tags', '2018-06-26 08:10:24', '2018-06-26 08:10:24');
+INSERT INTO `permissions` VALUES ('79', 'edit_product_tags', 'product_tags', '2018-06-26 08:10:24', '2018-06-26 08:10:24');
+INSERT INTO `permissions` VALUES ('80', 'add_product_tags', 'product_tags', '2018-06-26 08:10:24', '2018-06-26 08:10:24');
+INSERT INTO `permissions` VALUES ('81', 'delete_product_tags', 'product_tags', '2018-06-26 08:10:24', '2018-06-26 08:10:24');
 
 -- ----------------------------
 -- Table structure for product_categories
@@ -698,11 +800,12 @@ CREATE TABLE `product_categories` (
   `parent_id` int(10) unsigned DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` text COLLATE utf8_unicode_ci,
+  `order` tinyint(3) unsigned DEFAULT NULL,
+  `excerpt` text COLLATE utf8_unicode_ci,
   `seo_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_description` text COLLATE utf8_unicode_ci,
-  `meta_keywords` text COLLATE utf8_unicode_ci,
-  `order` tinyint(4) DEFAULT '1',
+  `meta_keywords` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -712,8 +815,47 @@ CREATE TABLE `product_categories` (
 -- ----------------------------
 -- Records of product_categories
 -- ----------------------------
-INSERT INTO `product_categories` VALUES ('1', null, 'product category 11', 'product-category-1-1', 'product-categories/December2017/y4PNBJMIIp3x9fK9gAJ1.jpg', 'product category 1 1seo', 'product category 11', 'product category 11', '1', '2017-12-20 02:33:00', '2017-12-22 03:11:05');
-INSERT INTO `product_categories` VALUES ('2', null, 'product category 2 2', 'product-category-2', 'product-categories/December2017/2f6QETLafRaQfPadnBA8.jpg', 'product category 2 seo', 'product category 2', 'product category 2', '1', '2017-12-20 02:33:00', '2017-12-22 02:59:21');
+INSERT INTO `product_categories` VALUES ('1', null, 'category 1', 'category-1', 'product-categories/July2018/Q4dBtjkGLdf7oWaJxaFr.jpg', '1', null, null, null, null, '2018-06-26 03:09:56', '2018-07-20 08:08:34');
+INSERT INTO `product_categories` VALUES ('2', '1', 'category 1 1', 'category-1-1', 'product-categories/July2018/sPniU2hJ1n8pbih0R2r3.jpg', '1', null, null, null, null, '2018-06-26 03:11:00', '2018-07-20 08:08:51');
+
+-- ----------------------------
+-- Table structure for product_product_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `product_product_tag`;
+CREATE TABLE `product_product_tag` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `product_tag_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of product_product_tag
+-- ----------------------------
+INSERT INTO `product_product_tag` VALUES ('1', '1', '1');
+INSERT INTO `product_product_tag` VALUES ('2', '1', '2');
+
+-- ----------------------------
+-- Table structure for product_tags
+-- ----------------------------
+DROP TABLE IF EXISTS `product_tags`;
+CREATE TABLE `product_tags` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `product_tags_name_unique` (`name`),
+  UNIQUE KEY `product_tags_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of product_tags
+-- ----------------------------
+INSERT INTO `product_tags` VALUES ('1', 'Product Tag 1', 'product-tag-1', null, '2018-06-26 08:11:55', '2018-06-26 08:11:55');
+INSERT INTO `product_tags` VALUES ('2', 'Product Tag 2', 'product-tag-2', null, '2018-06-26 08:12:11', '2018-06-26 08:12:11');
 
 -- ----------------------------
 -- Table structure for products
@@ -721,31 +863,32 @@ INSERT INTO `product_categories` VALUES ('2', null, 'product category 2 2', 'pro
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `product_category_id` int(11) NOT NULL,
+  `product_category_id` tinyint(4) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `excerpt` text COLLATE utf8_unicode_ci,
-  `image` text COLLATE utf8_unicode_ci,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `featured` tinyint(4) DEFAULT NULL,
+  `order` tinyint(4) DEFAULT '1',
+  `product_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `price` int(11) NOT NULL,
+  `image` text COLLATE utf8_unicode_ci,
+  `excerpt` text COLLATE utf8_unicode_ci,
   `body` text COLLATE utf8_unicode_ci,
   `parameter` text COLLATE utf8_unicode_ci,
-  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `seo_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `meta_description` text COLLATE utf8_unicode_ci,
-  `meta_keywords` text COLLATE utf8_unicode_ci,
-  `order` tinyint(4) DEFAULT '1',
+  `meta_keywords` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `price` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `products_slug_unique` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  UNIQUE KEY `products_slug_unique` (`slug`),
+  UNIQUE KEY `products_product_code_unique` (`product_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of products
 -- ----------------------------
-INSERT INTO `products` VALUES ('1', '2', 'product  1', 'product  11 excerpt', 'products/December2017/fvzO6spGVKap3JaoXVf1.jpg', '1', '<p>product&nbsp; 1&nbsp;product&nbsp; 11</p>', '<p>product&nbsp; 1 tech</p>', 'product-1', 'product  1 seo', 'product  1', 'product  1', '1', '2017-12-20 05:20:00', '2018-05-19 06:57:03', '200');
-INSERT INTO `products` VALUES ('2', '1', 'product 2', 'product 2 excerpt', 'products/December2017/KKdbx6UY1BqKc4gwadcB.jpg', '1', '<p>product 2</p>', '<p>product 2 tech</p>', 'product-2', 'product 2 seo', 'product 2', 'product 2', '2', '2017-12-20 05:23:00', '2018-05-19 06:47:18', '100');
-INSERT INTO `products` VALUES ('3', '1', 'product 3', '1', null, '0', null, null, 'product-3', null, null, null, '1', '2018-05-19 06:48:00', '2018-05-19 06:55:05', '300');
+INSERT INTO `products` VALUES ('1', '1', 'products 1', 'products-1', '0', '1', 'p-1', '100', 'products/June2018/9BHO2POYvYtAkED2zZXW.jpg', null, null, null, null, null, null, '2018-06-26 03:16:00', '2018-06-26 08:36:08');
+INSERT INTO `products` VALUES ('2', '1', 'product 1', 'product-1', '1', '1', '11', '100', 'products/July2018/Imlnbmte5n4HB4Rzlh8r.jpg', null, null, null, null, null, null, '2018-06-26 03:26:37', '2018-07-20 08:11:45');
 
 -- ----------------------------
 -- Table structure for roles
@@ -764,8 +907,8 @@ CREATE TABLE `roles` (
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
-INSERT INTO `roles` VALUES ('1', 'admin', 'Administrator', '2017-09-20 02:12:44', '2017-09-20 02:12:44');
-INSERT INTO `roles` VALUES ('2', 'user', 'Normal User', '2017-09-20 02:12:44', '2017-09-20 02:12:44');
+INSERT INTO `roles` VALUES ('1', 'admin', 'Administrator', '2018-06-25 06:49:25', '2018-06-25 06:49:25');
+INSERT INTO `roles` VALUES ('2', 'Editors', 'Editors', '2018-06-25 06:49:25', '2018-06-26 05:32:53');
 
 -- ----------------------------
 -- Table structure for settings
@@ -775,29 +918,62 @@ CREATE TABLE `settings` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_ci,
   `details` text COLLATE utf8mb4_unicode_ci,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `order` int(11) NOT NULL DEFAULT '1',
   `group` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `settings_key_unique` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of settings
 -- ----------------------------
-INSERT INTO `settings` VALUES ('1', 'index.company_name', '公司名称', 'maomao', null, 'text', '0', 'index');
-INSERT INTO `settings` VALUES ('2', 'index.welcome', '欢迎语', 'welcome to maomao site, can call 1893283222', null, 'text', '1', 'index');
-INSERT INTO `settings` VALUES ('3', 'index.logo', 'logo(原版为透明底白字,185*30)', 'settings/December2017/5x7E4szDcxMIyZUHSW1o.png', null, 'image', '2', 'index');
-INSERT INTO `settings` VALUES ('4', 'index.slide_1', '幻灯片1（像素需为1480*400）', 'settings/December2017/LMLHEzCPNZa6so94cjl9.jpg', null, 'image', '3', 'index');
-INSERT INTO `settings` VALUES ('5', 'index.slide_2', '幻灯片2（像素需为1480*400）', 'settings/December2017/ivTp9WkXseSsG6ewngAq.jpg', null, 'image', '4', 'index');
-INSERT INTO `settings` VALUES ('6', 'index.about_us', '首页 - 关于我们图像(350*200)', 'settings/December2017/D6hao6ZiCTyJ2gdICIQN.jpg', null, 'image', '5', 'index');
-INSERT INTO `settings` VALUES ('7', 'index.about_us_excerpt', '首页 - 关于我们简介', 'about us excerpt', null, 'text', '6', 'index');
-INSERT INTO `settings` VALUES ('8', 'index.tech', '首页 - 技术服务图像(350*200)', 'settings/December2017/dK6U9KIeGnLAIjNl170d.jpg', null, 'image', '7', 'index');
-INSERT INTO `settings` VALUES ('9', 'index.tech_excerpt', '首页 - 技术服务简介', 'our tech excerpt', null, 'text', '8', 'index');
-INSERT INTO `settings` VALUES ('10', 'index.foot', '底部信息', '<p> 24 hour response service,welcome to inquire at any time!</p>\r\n                                <div class=\"two-columns row\">\r\n                                    <div class=\"object\">\r\n                                        <i class=\"fa fa-map-marker\"></i>\r\n                                        <strong>Add:</strong> xx Street, Zhengzhou, China<br>\r\n                                        <i class=\"fa fa-phone\"></i>\r\n                                        <strong>Tel:</strong> <a href=\"tel:0086-371-1111111\">0086-371-111111</a>\r\n                                    </div>\r\n                                    <div class=\"object ft-phone\">\r\n                                        <i class=\"fa fa-tablet\"></i>\r\n                                        <strong>Phone: </strong> <a href=\"tel:0086-11111\">0086-11111</a><br>\r\n                                        <i class=\"fa fa-envelope\"></i>\r\n                                        <strong>E-mail:</strong>\r\n                                        <a href=\"mailto:info@111.com\">info@111.com</a>\r\n                                    </div>\r\n                                </div><!-- /.row -->\r\n                                <a href=\"/contact_us\" class=\"button\">contact us</a>', null, 'code_editor', '9', 'index');
-INSERT INTO `settings` VALUES ('11', 'index.copyright', '底部版权信息', '版权所有：maomao 备案号:豫ICP备12131号 ', null, 'text', '10', 'index');
+INSERT INTO `settings` VALUES ('1', 'site.title', 'Site Title', 'Site Title', '', 'text', '1', 'Site');
+INSERT INTO `settings` VALUES ('2', 'site.description', 'Site Description', 'Site Description', '', 'text', '2', 'Site');
+INSERT INTO `settings` VALUES ('3', 'site.logo', 'Site Logo', '', '', 'image', '3', 'Site');
+INSERT INTO `settings` VALUES ('4', 'site.google_analytics_tracking_id', 'Google Analytics Tracking ID', null, '', 'text', '4', 'Site');
+INSERT INTO `settings` VALUES ('5', 'admin.bg_image', 'Admin Background Image', '', '', 'image', '5', 'Admin');
+INSERT INTO `settings` VALUES ('6', 'admin.title', 'Admin Title', 'Voyager', '', 'text', '1', 'Admin');
+INSERT INTO `settings` VALUES ('7', 'admin.description', 'Admin Description', 'Welcome to Voyager. The Missing Admin for Laravel', '', 'text', '2', 'Admin');
+INSERT INTO `settings` VALUES ('8', 'admin.loader', 'Admin Loader', '', '', 'image', '3', 'Admin');
+INSERT INTO `settings` VALUES ('9', 'admin.icon_image', 'Admin Icon Image', '', '', 'image', '4', 'Admin');
+INSERT INTO `settings` VALUES ('10', 'admin.google_analytics_client_id', 'Google Analytics Client ID (used for admin dashboard)', null, '', 'text', '1', 'Admin');
+INSERT INTO `settings` VALUES ('13', 'index.logo', 'logo(原版为透明底白字,185*30)', 'settings/July2018/TMdNYb2qkZVhfNuDm8oL.png', null, 'image', '8', 'index');
+INSERT INTO `settings` VALUES ('14', 'index.slide_1', '幻灯片1（像素需为1480*400）', 'settings/July2018/Sr1saoylpab0w6vl2KTk.jpg', null, 'image', '9', 'index');
+INSERT INTO `settings` VALUES ('15', 'index.slide_2', '幻灯片2（像素需为1480*400）', 'settings/July2018/M9NGkFwsetmfLFFLj2QT.jpg', null, 'image', '10', 'index');
+INSERT INTO `settings` VALUES ('16', 'index.about_us', '首页 - 关于我们图像(350*200)', 'settings/July2018/GFDZuPbhbPLtEjfa4gym.jpg', null, 'image', '11', 'index');
+INSERT INTO `settings` VALUES ('17', 'index.about_us_excerpt', '首页 - 关于我们简介', 'about us excerpt', null, 'text', '12', 'index');
+INSERT INTO `settings` VALUES ('18', 'index.tech', '首页 - 技术服务图像(350*200)', 'settings/July2018/dsB0KehRfDEk7EgMqWlM.jpg', null, 'image', '13', 'index');
+INSERT INTO `settings` VALUES ('19', 'index.tech_excerpt', '首页 - 技术服务简介', 'our tech excerpt', null, 'text', '14', 'index');
+INSERT INTO `settings` VALUES ('20', 'index.foot', '底部信息', '<p> 24 hour response service,welcome to inquire at any time!</p>\r\n                                <div class=\"two-columns row\">\r\n                                    <div class=\"object\">\r\n                                        <i class=\"fa fa-map-marker\"></i>\r\n                                        <strong>Add:</strong> xx Street, Zhengzhou, China<br>\r\n                                        <i class=\"fa fa-phone\"></i>\r\n                                        <strong>Tel:</strong> <a href=\"tel:0086-371-1111111\">0086-371-111111</a>\r\n                                    </div>\r\n                                    <div class=\"object ft-phone\">\r\n                                        <i class=\"fa fa-tablet\"></i>\r\n                                        <strong>Phone: </strong> <a href=\"tel:0086-11111\">0086-11111</a><br>\r\n                                        <i class=\"fa fa-envelope\"></i>\r\n                                        <strong>E-mail:</strong>\r\n                                        <a href=\"mailto:info@111.com\">info@111.com</a>\r\n                                    </div>\r\n                                </div><!-- /.row -->\r\n                                <a href=\"/contact_us\" class=\"button\">contact us</a>', null, 'code_editor', '15', 'index');
+INSERT INTO `settings` VALUES ('21', 'index.copyright', '底部版权信息', '版权所有：maomao 备案号:豫ICP备12131号 ', null, 'text', '16', 'index');
+INSERT INTO `settings` VALUES ('22', 'index.company_name', '公司名称', 'aaaa', null, 'text', '17', 'index');
+INSERT INTO `settings` VALUES ('23', 'index.welcome', '欢迎语', 'welcome to maomao site, can call 1893283222', null, 'text', '18', 'index');
+
+-- ----------------------------
+-- Table structure for tags
+-- ----------------------------
+DROP TABLE IF EXISTS `tags`;
+CREATE TABLE `tags` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tags_name_unique` (`name`),
+  UNIQUE KEY `tags_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of tags
+-- ----------------------------
+INSERT INTO `tags` VALUES ('1', 'tag 1', 'tag 1 tag 1', '2018-06-26 06:04:43', '2018-06-26 06:04:43', 'tag-1');
+INSERT INTO `tags` VALUES ('2', 'tag 2', 'tag 2 tag 2', '2018-06-26 06:04:58', '2018-06-26 06:04:58', 'tag-2');
+INSERT INTO `tags` VALUES ('3', 'tag 3', 'tag 3 tag 3', '2018-06-26 06:05:15', '2018-06-26 06:05:15', 'tag-3');
 
 -- ----------------------------
 -- Table structure for translations
@@ -821,24 +997,46 @@ CREATE TABLE `translations` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for user_roles
+-- ----------------------------
+DROP TABLE IF EXISTS `user_roles`;
+CREATE TABLE `user_roles` (
+  `user_id` int(10) unsigned NOT NULL,
+  `role_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `user_roles_user_id_index` (`user_id`),
+  KEY `user_roles_role_id_index` (`role_id`),
+  CONSTRAINT `user_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_roles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of user_roles
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `role_id` int(11) DEFAULT NULL,
+  `role_id` int(10) unsigned DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'users/default.png',
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `settings` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  UNIQUE KEY `users_email_unique` (`email`),
+  KEY `users_role_id_foreign` (`role_id`),
+  CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '1', 'chaos', 'chaos29092@gmail.com', 'users/September2017/chaos.jpg', '$2y$10$Hn5.NiTyB5uE4eLv.lOJDeNcmLMkhBHh5t6CGJAbfiP.ubYTc5Hi6', null, '2017-09-20 02:14:03', '2017-09-20 02:23:43');
+INSERT INTO `users` VALUES ('1', '1', 'chaos', 'chaos29092@gmail.com', 'users/June2018/V9TR4wa2PcmqvZsPGfo3.jpg', '$2y$10$RcPyBnrElDyjxxAgX6C9XONCyA.Ql147EK35QKhCMkoE8/oCw6xI6', 'ggEzEOOXs9jbuCSxOM0GXghVaTPS1jJX4UWIJifLiwqVUcHZsKZEpRNGT6q1', '{\"locale\":\"en\"}', '2018-06-25 06:51:25', '2018-06-25 08:10:01');
+INSERT INTO `users` VALUES ('2', '2', 'editor', 'editor@email.com', 'users/June2018/rlYXTKUjEOiH9hQWdAhE.jpg', '$2y$10$RIoP6CgjR8hVpZauVKNFU.0XT/H2LwS284f0y3ngX/GfcOaTXoniC', null, '{\"locale\":\"en\"}', '2018-06-26 05:47:32', '2018-06-26 05:47:32');

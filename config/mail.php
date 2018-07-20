@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'noreply@notice.chenghuangyun.com'),
-        'name' => env('MAIL_FROM_NAME', 'The Web Name'),
+        'name' => env('MAIL_FROM_NAME', 'WebMaster'),
     ],
 
     /*
